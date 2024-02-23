@@ -131,7 +131,7 @@
         android:background="@drawable/custom_edit_text"
         android:ems="10"
         android:fontFamily="@font/inter"
-        android:hint="@string/txt_mt_btn_password"
+        android:hint="@string/txt_hint_password"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="#808080"
