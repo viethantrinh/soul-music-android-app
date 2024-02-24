@@ -86,7 +86,6 @@ public class SignInFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        pbLoginProcess.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);
