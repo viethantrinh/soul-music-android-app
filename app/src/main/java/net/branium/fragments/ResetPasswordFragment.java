@@ -64,6 +64,7 @@ public class ResetPasswordFragment extends Fragment {
 
     private void resetPasswordWithFirebase() {
         String resetEmail = etRePasswordEmail.getText().toString();
+        mAuth.setLanguageCode("vn");
         mAuth.sendPasswordResetEmail(resetEmail)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

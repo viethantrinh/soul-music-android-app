@@ -20,19 +20,26 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.activities.MainActivity;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {
     TextView tvAlreadyHaveAccount;
     FrameLayout frmLayoutAuth;
-
     EditText etRegisterUserName;
     EditText etRegisterEmail;
     EditText etRegisterPassword;
@@ -40,6 +47,7 @@ public class SignUpFragment extends Fragment {
     MaterialButton mtBtnConfirmRegister;
     ProgressBar pbRegisterProcess;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +64,7 @@ public class SignUpFragment extends Fragment {
         mtBtnConfirmRegister = view.findViewById(R.id.mt_btn_confirm_register);
         pbRegisterProcess = view.findViewById(R.id.pb_register_process);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         return view;
     }
 
@@ -137,6 +146,7 @@ public class SignUpFragment extends Fragment {
                 signUpWithFireBase();
                 mtBtnConfirmRegister.setEnabled(false);
                 mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
+                mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
             }
         });
 
@@ -144,24 +154,49 @@ public class SignUpFragment extends Fragment {
     }
 
     private void signUpWithFireBase() {
-        if (etRegisterEmail.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
-            if (etRegisterPassword.getText().toString().equals(etRegisterRePassword.getText().toString())) {
+        String username = etRegisterUserName.getText().toString();
+        String email = etRegisterEmail.getText().toString();
+        String password = etRegisterPassword.getText().toString();
+        String rePassword = etRegisterRePassword.getText().toString();
+        if (email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+            if (password.equals(rePassword)) {
                 pbRegisterProcess.setVisibility(View.VISIBLE);
-                mAuth.createUserWithEmailAndPassword(etRegisterEmail.getText().toString(), etRegisterPassword.getText().toString())
+                mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 pbRegisterProcess.setVisibility(View.INVISIBLE);
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
+                                    Map<String, Object> userMap = new HashMap<>();
+                                    userMap.put("username", username);
+                                    userMap.put("email", email);
+                                    db.collection("users")
+                                            .document(task.getResult().getUser().getUid())
+                                            .set(userMap)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                                    startActivity(intent);
+                                                    getActivity().finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getActivity(), e.getMessage(),
+                                                            Toast.LENGTH_SHORT).show();
+                                                    mtBtnConfirmRegister.setEnabled(true);
+                                                    mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
+                                                    mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
+                                                }
+                                            });
                                 } else {
                                     Toast.makeText(getActivity(), task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                     mtBtnConfirmRegister.setEnabled(true);
                                     mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-
+                                    mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
                                 }
                             }
                         });
@@ -169,11 +204,13 @@ public class SignUpFragment extends Fragment {
                 etRegisterRePassword.setError("Xác nhân mật khẩu không khớp!");
                 mtBtnConfirmRegister.setEnabled(true);
                 mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
+                mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
             }
         } else {
             etRegisterEmail.setError("Email sai định dạng!");
             mtBtnConfirmRegister.setEnabled(true);
             mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
+            mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
         }
     }
 
@@ -191,21 +228,26 @@ public class SignUpFragment extends Fragment {
                     if (!etRegisterRePassword.getText().toString().isEmpty()) {
                         mtBtnConfirmRegister.setEnabled(true);
                         mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
+                        mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
                     } else {
                         mtBtnConfirmRegister.setEnabled(false);
                         mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
+                        mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
                     }
                 } else {
                     mtBtnConfirmRegister.setEnabled(false);
                     mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
+                    mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
                 }
             } else {
                 mtBtnConfirmRegister.setEnabled(false);
                 mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
+                mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
             }
         } else {
             mtBtnConfirmRegister.setEnabled(false);
             mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
+            mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
         }
     }
 }
