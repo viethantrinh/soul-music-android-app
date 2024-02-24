@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class SignInFragment extends Fragment {
     EditText etLoginEmail;
     EditText etLoginPassword;
     MaterialButton mtBtnLogin;
+    ProgressBar pbLoginProcess;
     FirebaseAuth mAuth;
 
     @Override
@@ -50,6 +52,7 @@ public class SignInFragment extends Fragment {
         etLoginEmail = view.findViewById(R.id.et_login_email);
         etLoginPassword = view.findViewById(R.id.et_login_password);
         mtBtnLogin = view.findViewById(R.id.mt_btn_login);
+        pbLoginProcess = view.findViewById(R.id.pb_login_process);
         mAuth = FirebaseAuth.getInstance();
         return view;
     }
@@ -68,6 +71,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
+                    pbLoginProcess.setVisibility(View.VISIBLE);
                     signInWithFireBase();
                 }
             }
@@ -82,16 +86,17 @@ public class SignInFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        pbLoginProcess.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getContext(), task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
+                            pbLoginProcess.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
-        Toast.makeText(getContext(), "In singIn()", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkInput() {
