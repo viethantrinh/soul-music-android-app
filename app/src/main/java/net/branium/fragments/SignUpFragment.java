@@ -1,6 +1,5 @@
 package net.branium.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
@@ -34,7 +32,6 @@ import net.branium.activities.MainActivity;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {

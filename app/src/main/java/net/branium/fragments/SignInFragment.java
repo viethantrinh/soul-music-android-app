@@ -2,12 +2,9 @@ package net.branium.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -19,17 +16,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.activities.MainActivity;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignInFragment extends Fragment {
     MaterialButton mtBtnRegister;
@@ -39,7 +47,12 @@ public class SignInFragment extends Fragment {
     EditText etLoginPassword;
     MaterialButton mtBtnLogin;
     ProgressBar pbLoginProcess;
+    MaterialButton mtBtnLoginWithGoogle;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    int RC_SIGN_IN = 20;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +66,16 @@ public class SignInFragment extends Fragment {
         etLoginPassword = view.findViewById(R.id.et_login_password);
         mtBtnLogin = view.findViewById(R.id.mt_btn_login);
         pbLoginProcess = view.findViewById(R.id.pb_login_process);
+        mtBtnLoginWithGoogle = view.findViewById(R.id.mt_btn_login_with_google);
+
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("41333975428-s0f62era7i1uujcphvte64dbn3cjfp4d.apps.googleusercontent.com").
+                requestEmail().build();
+        gsc = GoogleSignIn.getClient(getActivity(), gso);
+
         return view;
     }
 
@@ -77,6 +99,71 @@ public class SignInFragment extends Fragment {
             }
         });
 
+        mtBtnLoginWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInWithGoogle();
+            }
+        });
+
+    }
+
+    private void signInWithGoogle() {
+        Intent intent = gsc.getSignInIntent();
+        startActivityForResult(intent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                var idToken = account.getIdToken();
+                firebaseAuth(idToken);
+            } catch (ApiException e) {
+                Toast.makeText(getContext(), "Somethong wroing", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void firebaseAuth(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("id", user.getUid());
+                            map.put("username", user.getDisplayName());
+                            map.put("email", user.getEmail());
+
+                            db.collection("users")
+                                    .document(user.getUid())
+                                    .set(map)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Intent intent = new Intent(getContext(), MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), e.getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(getContext(), task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void signInWithFireBase() {
