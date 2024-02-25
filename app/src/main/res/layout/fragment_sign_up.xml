@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:theme="@style/Base.Theme.SoulMusicAppProject"
     tools:context=".fragments.SignUpFragment">
 
     <ImageView
@@ -16,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img" />
+        app:srcCompat="@drawable/logo_image" />
 
     <TextView
         android:id="@+id/textView"
@@ -226,7 +227,8 @@
         android:src="@drawable/ic_show_pwd_24"
         app:layout_constraintBottom_toBottomOf="@+id/et_register_re_password"
         app:layout_constraintEnd_toEndOf="@+id/et_register_re_password"
-        app:layout_constraintTop_toTopOf="@+id/et_register_re_password" />
+        app:layout_constraintTop_toTopOf="@+id/et_register_re_password"
+        android:contentDescription="@string/txt_iv_content_description" />
 
     <ImageView
         android:id="@+id/iv_register_show_pwd"
@@ -236,7 +238,8 @@
         android:src="@drawable/ic_show_pwd_24"
         app:layout_constraintBottom_toBottomOf="@+id/et_register_password"
         app:layout_constraintEnd_toEndOf="@+id/et_register_password"
-        app:layout_constraintTop_toTopOf="@+id/et_register_password" />
+        app:layout_constraintTop_toTopOf="@+id/et_register_password"
+        android:contentDescription="@string/txt_iv_content_description" />
 
     <TextView
         android:id="@+id/textView4"

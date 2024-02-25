@@ -5,4 +5,11 @@
     <color name="red">#F44336</color>
     <color name="medium_green">#20D062</color>
     <color name="very_light_green">#B7E6C8</color>
+
+    <!-- color for bottom navigation bar -->
+    <color name="light_white">#d2d2d2</color>
+    <color name="card_1">#a3e4d7</color>
+    <color name="card_2">#f9e79f</color>
+    <color name="card_3">#d7bde2</color>
+    <color name="card_4">#d2c3d8</color>
 </resources>

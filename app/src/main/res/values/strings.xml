@@ -14,8 +14,14 @@
     <string name="txt_tv_repassword">Xác nhận mật khẩu</string>
     <string name="txt_tv_email">Email</string>
     <string name="txt_et_repassword">Xác nhận mật khẩu</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_btn_re_password_by_email">Lấy lại mật khẩu</string>
     <string name="txt_tv_check_your_email">Kiểm tra email của bạn!</string>
+
+    <!-- strings for bottom navigation -->
+    <string name="txt_home">Home</string>
+    <string name="txt_playlist">Playlist</string>
+    <string name="txt_rank">Rank</string>
+    <string name="txt_user">User</string>
+    <string name="txt_love">Love</string>
 </resources>

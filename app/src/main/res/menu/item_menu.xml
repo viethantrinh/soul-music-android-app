@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_24"
+        android:title="@string/txt_home"
+
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/nav_playlist"
+        android:icon="@drawable/ic_playlist_24"
+        android:title="@string/txt_playlist"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/nav_rank"
+        android:icon="@drawable/ic_rank_24"
+        android:title="@string/txt_rank"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/nav_love"
+        android:icon="@drawable/ic_love_24"
+        android:title="@string/txt_love"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/nav_user"
+        android:icon="@drawable/ic_user_24"
+        android:title="@string/txt_user"
+        app:showAsAction="never"
+        />
+
+
+</menu>

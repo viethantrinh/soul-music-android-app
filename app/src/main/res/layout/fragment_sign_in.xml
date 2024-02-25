@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:theme="@style/Base.Theme.SoulMusicAppProject"
     tools:context=".fragments.SignInFragment">
 
 
@@ -38,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img" />
+        app:srcCompat="@drawable/logo_image" />
 
     <TextView
         android:id="@+id/textView"
@@ -184,7 +185,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mt_btn_register"
-        app:srcCompat="@drawable/img_1" />
+        app:srcCompat="@drawable/login_option_image" />
 
     <ProgressBar
         android:id="@+id/pb_login_process"
@@ -204,7 +205,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:src="@drawable/google"
+        android:src="@drawable/ic_google_24"
         app:layout_constraintBottom_toBottomOf="@+id/mt_btn_login_with_google"
         app:layout_constraintStart_toStartOf="@+id/mt_btn_login_with_google"
         app:layout_constraintTop_toTopOf="@+id/mt_btn_login_with_google" />
