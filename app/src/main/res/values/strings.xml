@@ -9,7 +9,7 @@
     <string name="txt_tv_username">Tên đăng nhập</string>
     <string name="txt_mt_btn_login_with_google">Tiếp tục với Google</string>
     <string name="txt_iv_content_description">TODO</string>
-    <string name="txt_tv_already_have_an_account">Đã có tài khoản? Đăng nhập ngay</string>
+    <string name="txt_tv_already_have_an_account">Đăng nhập ngay</string>
     <string name="txt_email">Email của bạn</string>
     <string name="txt_tv_repassword">Xác nhận mật khẩu</string>
     <string name="txt_tv_email">Email</string>

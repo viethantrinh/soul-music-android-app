@@ -19,8 +19,9 @@
         android:height="44dp"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/txt_mt_btn_login_with_google"
-        android:textColor="#808080"
+        android:textColor="@color/white"
         app:cornerRadius="5dp"
+        app:iconTint="#6A3D3D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +73,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/inter"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/txt_tv_forget_password"
-        android:textColor="#757575"
+        android:textColor="@color/medium_green"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/et_login_password"
         app:layout_constraintHorizontal_bias="1.0"
@@ -197,4 +198,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/google"
+        app:layout_constraintBottom_toBottomOf="@+id/mt_btn_login_with_google"
+        app:layout_constraintStart_toStartOf="@+id/mt_btn_login_with_google"
+        app:layout_constraintTop_toTopOf="@+id/mt_btn_login_with_google" />
+
+    <ImageView
+        android:id="@+id/iv_show_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_show_pwd_24"
+        app:layout_constraintBottom_toBottomOf="@+id/et_login_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_login_password"
+        app:layout_constraintTop_toTopOf="@+id/et_login_password"
+        app:srcCompat="@drawable/ic_show_pwd_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

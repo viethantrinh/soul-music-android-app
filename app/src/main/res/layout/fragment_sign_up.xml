@@ -188,13 +188,13 @@
         android:id="@+id/tv_already_have_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/inter_medium"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/txt_tv_already_have_an_account"
-        android:textColor="#757575"
+        android:textColor="@color/medium_green"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mt_btn_confirm_register" />
 
@@ -217,6 +217,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_register_re_password" />
+
+    <ImageView
+        android:id="@+id/iv_register_show_re_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_show_pwd_24"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_re_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_re_password"
+        app:layout_constraintTop_toTopOf="@+id/et_register_re_password" />
+
+    <ImageView
+        android:id="@+id/iv_register_show_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_show_pwd_24"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_password"
+        app:layout_constraintTop_toTopOf="@+id/et_register_password" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="Đã có tài khoản? "
+        android:textColor="#757575"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_already_have_account"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mt_btn_confirm_register" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

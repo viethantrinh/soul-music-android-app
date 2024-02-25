@@ -2,11 +2,13 @@ package net.branium.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.activities.MainActivity;
+import net.branium.utils.PasswordMaskTransformation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +55,7 @@ public class SignInFragment extends Fragment {
     FirebaseFirestore db;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    ImageView ivShowPwd;
     int RC_SIGN_IN = 20;
 
     @Override
@@ -66,6 +70,7 @@ public class SignInFragment extends Fragment {
         etLoginPassword = view.findViewById(R.id.et_login_password);
         mtBtnLogin = view.findViewById(R.id.mt_btn_login);
         pbLoginProcess = view.findViewById(R.id.pb_login_process);
+        ivShowPwd = view.findViewById(R.id.iv_show_pwd);
         mtBtnLoginWithGoogle = view.findViewById(R.id.mt_btn_login_with_google);
 
         mAuth = FirebaseAuth.getInstance();
@@ -106,6 +111,23 @@ public class SignInFragment extends Fragment {
             }
         });
 
+        ivShowPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processPassword();
+            }
+        });
+
+    }
+
+    private void processPassword() {
+        if (etLoginPassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
+            etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            ivShowPwd.setImageResource(R.drawable.ic_hidden_pwd_24);
+        } else {
+            etLoginPassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
+            ivShowPwd.setImageResource(R.drawable.ic_show_pwd_24);
+        }
     }
 
     private void signInWithGoogle() {

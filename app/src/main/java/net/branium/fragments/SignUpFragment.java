@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.activities.MainActivity;
+import net.branium.utils.PasswordMaskTransformation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +46,8 @@ public class SignUpFragment extends Fragment {
     EditText etRegisterRePassword;
     MaterialButton mtBtnConfirmRegister;
     ProgressBar pbRegisterProcess;
+    ImageView ivRegisterShowPwd;
+    ImageView ivRegisterShowRePwd;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
@@ -60,6 +65,8 @@ public class SignUpFragment extends Fragment {
         etRegisterRePassword = view.findViewById(R.id.et_register_re_password);
         mtBtnConfirmRegister = view.findViewById(R.id.mt_btn_confirm_register);
         pbRegisterProcess = view.findViewById(R.id.pb_register_process);
+        ivRegisterShowPwd = view.findViewById(R.id.iv_register_show_pwd);
+        ivRegisterShowRePwd = view.findViewById(R.id.iv_register_show_re_pwd);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         return view;
@@ -144,6 +151,26 @@ public class SignUpFragment extends Fragment {
                 mtBtnConfirmRegister.setEnabled(false);
                 mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
                 mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
+            }
+        });
+
+        ivRegisterShowPwd.setOnClickListener(v -> {
+            if (etRegisterPassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
+                etRegisterPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                ivRegisterShowPwd.setImageResource(R.drawable.ic_hidden_pwd_24);
+            } else {
+                etRegisterPassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
+                ivRegisterShowPwd.setImageResource(R.drawable.ic_show_pwd_24);
+            }
+        });
+
+        ivRegisterShowRePwd.setOnClickListener(v -> {
+            if (etRegisterRePassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
+                etRegisterRePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                ivRegisterShowRePwd.setImageResource(R.drawable.ic_hidden_pwd_24);
+            } else {
+                etRegisterRePassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
+                ivRegisterShowRePwd.setImageResource(R.drawable.ic_show_pwd_24);
             }
         });
 
