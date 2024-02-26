@@ -15,11 +15,15 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
 import net.branium.fragments.HomeFragment;
+import net.branium.fragments.LoveFragment;
 import net.branium.fragments.PlaylistFragment;
+import net.branium.fragments.RankFragment;
+import net.branium.fragments.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     FrameLayout mainFrameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +38,28 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.nav_home) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.nav_home) {
                     setFragment(new HomeFragment());
                 }
 
-                if (item.getItemId() == R.id.nav_playlist) {
+                if (itemId == R.id.nav_playlist) {
                     setFragment(new PlaylistFragment());
                 }
+
+                if (itemId == R.id.nav_love) {
+                    setFragment(new LoveFragment());
+                }
+
+                if (itemId == R.id.nav_rank) {
+                    setFragment(new RankFragment());
+                }
+
+                if (itemId == R.id.nav_user) {
+                    setFragment(new UserFragment());
+                }
+
                 return true;
             }
         });
