@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import net.branium.R;
-import net.branium.fragments.SignInFragment;
+import net.branium.fragments.auth.SignInFragment;
 
 public class AuthActivity extends AppCompatActivity {
 

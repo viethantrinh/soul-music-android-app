@@ -9,31 +9,55 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
-import net.branium.fragments.HomeFragment;
-import net.branium.fragments.LoveFragment;
-import net.branium.fragments.PlaylistFragment;
-import net.branium.fragments.RankFragment;
-import net.branium.fragments.UserFragment;
+import net.branium.adapters.ViewPagerAdapter;
+import net.branium.fragments.main.HomeFragment;
+import net.branium.fragments.main.LoveFragment;
+import net.branium.fragments.main.PlaylistFragment;
+import net.branium.fragments.main.RankFragment;
+import net.branium.fragments.main.UserFragment;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
-    FrameLayout mainFrameLayout;
+    ViewPager2 viewPagerMain;
+    ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
-        mainFrameLayout = findViewById(R.id.main_frame_layout);
+        viewPagerMain = findViewById(R.id.view_pager_main);
+
         bottomNavigation.setSelectedItemId(R.id.nav_home);
-        setFragment(new HomeFragment());
+        viewPagerAdapter = new ViewPagerAdapter(
+                getSupportFragmentManager(),
+                getLifecycle(),
+                List.of(new HomeFragment(), new PlaylistFragment(), new RankFragment(), new LoveFragment(), new UserFragment())
+        );
+        viewPagerMain.setAdapter(viewPagerAdapter);
+
+        viewPagerMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0 -> bottomNavigation.setSelectedItemId(R.id.nav_home);
+                    case 1 -> bottomNavigation.setSelectedItemId(R.id.nav_playlist);
+                    case 2 -> bottomNavigation.setSelectedItemId(R.id.nav_rank);
+                    case 3 -> bottomNavigation.setSelectedItemId(R.id.nav_love);
+                    case 4 -> bottomNavigation.setSelectedItemId(R.id.nav_user);
+                }
+                super.onPageSelected(position);
+            }
+        });
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -41,33 +65,29 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.nav_home) {
-                    setFragment(new HomeFragment());
+                    viewPagerMain.setCurrentItem(0, true);
                 }
 
                 if (itemId == R.id.nav_playlist) {
-                    setFragment(new PlaylistFragment());
-                }
-
-                if (itemId == R.id.nav_love) {
-                    setFragment(new LoveFragment());
+                    viewPagerMain.setCurrentItem(1, true);
                 }
 
                 if (itemId == R.id.nav_rank) {
-                    setFragment(new RankFragment());
+                    viewPagerMain.setCurrentItem(2, true);
+                }
+
+                if (itemId == R.id.nav_love) {
+                    viewPagerMain.setCurrentItem(3, true);
                 }
 
                 if (itemId == R.id.nav_user) {
-                    setFragment(new UserFragment());
+                    viewPagerMain.setCurrentItem(4, true);
                 }
 
                 return true;
             }
         });
-    }
 
-    private void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(mainFrameLayout.getId(), fragment);
-        fragmentTransaction.commit();
+
     }
 }

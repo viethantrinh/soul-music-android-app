@@ -45,4 +45,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }

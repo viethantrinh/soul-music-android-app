@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    android:theme="@style/Base.Theme.SoulMusicAppProject"
-    tools:context=".fragments.SignUpFragment">
+    tools:context=".fragments.auth.SignUpFragment">
 
     <ImageView
         android:id="@+id/imageView"

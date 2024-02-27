@@ -1,4 +1,4 @@
-package net.branium.fragments;
+package net.branium.fragments.auth;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

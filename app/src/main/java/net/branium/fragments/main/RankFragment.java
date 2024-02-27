@@ -1,4 +1,4 @@
-package net.branium.fragments;
+package net.branium.fragments.main;
 
 import android.os.Bundle;
 

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="650dp"
-    android:background="#303030"
-    tools:context=".fragments.PlaylistFragment">
+    android:background="@color/main_background"
+    tools:context=".fragments.main.PlaylistFragment">
 
 
     <TextView

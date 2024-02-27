@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RankFragment">
+    android:background="@color/main_background"
+    tools:context=".fragments.main.RankFragment">
 
     <TextView
         android:id="@+id/textView8"

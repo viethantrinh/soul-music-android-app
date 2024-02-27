@@ -1,4 +1,4 @@
-package net.branium.fragments;
+package net.branium.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;

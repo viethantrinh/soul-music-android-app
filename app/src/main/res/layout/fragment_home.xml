@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="650dp"
-    android:background="#303030"
-    tools:context=".fragments.HomeFragment">
+    android:layout_height="680dp"
+    android:background="@color/main_background"
+    android:theme="@style/Base.Theme.SoulMusicAppProject"
+    tools:context=".fragments.main.HomeFragment">
 
 
-    <TextView
-        android:id="@+id/textView6"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:backgroundTint="@color/medium_green"
+        android:text="fsdfsdf"
+        app:cornerRadius="20dp"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="231dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
