@@ -6,7 +6,7 @@
     android:layout_height="680dp"
     android:background="@color/main_background"
     android:theme="@style/Base.Theme.SoulMusicAppProject"
-    tools:context=".fragments.main.HomeFragment">
+    tools:context=".fragments.main.home.HomeFragment">
 
 
     <com.google.android.material.button.MaterialButton

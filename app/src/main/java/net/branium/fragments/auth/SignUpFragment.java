@@ -31,7 +31,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.activities.MainActivity;
-import net.branium.fragments.auth.SignInFragment;
 import net.branium.utils.PasswordMaskTransformation;
 
 import java.util.HashMap;
