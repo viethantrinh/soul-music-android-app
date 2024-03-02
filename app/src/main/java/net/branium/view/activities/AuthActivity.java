@@ -1,4 +1,4 @@
-package net.branium.activities;
+package net.branium.view.activities;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import net.branium.R;
-import net.branium.fragments.auth.SignInFragment;
+import net.branium.view.fragments.auth.SignInFragment;
 
 public class AuthActivity extends AppCompatActivity {
 

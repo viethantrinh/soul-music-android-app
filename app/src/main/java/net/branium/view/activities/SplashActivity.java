@@ -1,4 +1,4 @@
-package net.branium.activities;
+package net.branium.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

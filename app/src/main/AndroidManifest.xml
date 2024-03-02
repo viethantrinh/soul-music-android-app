@@ -14,11 +14,11 @@
         android:theme="@style/Base.Theme.SoulMusicAppProject"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AuthActivity"
+            android:name=".view.activities.AuthActivity"
             android:exported="false" />
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".view.activities.MainActivity" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".view.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="fullSensor">
             <intent-filter>

@@ -3,19 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="680dp"
+    android:layout_height="670dp"
     android:background="@color/main_background"
     android:theme="@style/Base.Theme.SoulMusicAppProject"
-    tools:context=".fragments.main.home.HomeFragment">
+    tools:context=".view.fragments.main.home.HomeFragment">
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/medium_green"
-        android:text="fsdfsdf"
-        app:cornerRadius="20dp"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="231dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

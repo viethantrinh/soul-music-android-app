@@ -1,7 +1,8 @@
-package net.branium.activities;
+package net.branium.view.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
-import net.branium.adapters.ViewPagerAdapter;
-import net.branium.fragments.main.home.HomeFragment;
-import net.branium.fragments.main.love.LoveFragment;
-import net.branium.fragments.main.playlist.PlaylistFragment;
-import net.branium.fragments.main.rank.RankFragment;
-import net.branium.fragments.main.user.UserFragment;
+import net.branium.view.adapters.ViewPagerAdapter;
+import net.branium.view.fragments.main.home.HomeFragment;
+import net.branium.view.fragments.main.love.LoveFragment;
+import net.branium.view.fragments.main.playlist.PlaylistFragment;
+import net.branium.view.fragments.main.rank.RankFragment;
+import net.branium.view.fragments.main.user.UserFragment;
 
 import java.util.List;
 

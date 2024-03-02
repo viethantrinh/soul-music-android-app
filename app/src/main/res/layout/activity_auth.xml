@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AuthActivity">
+    tools:context=".view.activities.AuthActivity">
 
     <FrameLayout
         android:id="@+id/frm_layout_auth"

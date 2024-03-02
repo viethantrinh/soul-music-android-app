@@ -1,4 +1,4 @@
-package net.branium.fragments.main.home;
+package net.branium.view.fragments.main.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

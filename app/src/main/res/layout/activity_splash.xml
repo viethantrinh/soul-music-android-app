@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SplashActivity"
+    tools:context=".view.activities.SplashActivity"
     android:background="@drawable/ic_splash_main_background">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

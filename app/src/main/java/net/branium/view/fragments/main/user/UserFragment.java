@@ -1,4 +1,4 @@
-package net.branium.fragments.main.user;
+package net.branium.view.fragments.main.user;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
-import net.branium.activities.AuthActivity;
+import net.branium.view.activities.AuthActivity;
 
 public class UserFragment extends Fragment {
     String userUID;
@@ -62,6 +63,9 @@ public class UserFragment extends Fragment {
 
         userUID = mAuth.getCurrentUser().getUid();
         userRef = db.collection("users").document(userUID);
+
+//        ConstraintLayout constraintLayout = view.findViewById(R.id.fragment_user_container);
+//        constraintLayout.setMaxHeight(100);
 
         return view;
     }

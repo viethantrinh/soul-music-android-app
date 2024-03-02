@@ -1,4 +1,4 @@
-package net.branium.fragments.auth;
+package net.branium.view.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +36,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
-import net.branium.activities.MainActivity;
+import net.branium.view.activities.MainActivity;
 import net.branium.utils.PasswordMaskTransformation;
 
 import java.util.HashMap;

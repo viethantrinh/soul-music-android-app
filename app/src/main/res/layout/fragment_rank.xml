@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="670dp"
     android:background="@color/main_background"
-    tools:context=".fragments.main.rank.RankFragment">
+    tools:context=".view.fragments.main.rank.RankFragment">
 
     <TextView
         android:id="@+id/textView8"
