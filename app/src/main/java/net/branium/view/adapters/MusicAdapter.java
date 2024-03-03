@@ -1,6 +1,7 @@
 package net.branium.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import net.branium.R;
 import net.branium.model.MusicFiles;
+import net.branium.view.activities.MusicPlayerActivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,6 +57,14 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         } else {
             Glide.with(context).load(R.drawable.default_user_image).into(holder.ivMusicPhoto);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MusicPlayerActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

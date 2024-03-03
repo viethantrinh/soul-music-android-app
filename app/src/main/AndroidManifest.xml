@@ -6,9 +6,9 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.SoulMusicAppProject"
         tools:targetApi="31">
+        <activity
+            android:name=".view.activities.MusicPlayerActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activities.AuthActivity"
             android:exported="false" />
