@@ -1,9 +1,10 @@
 package net.branium.view.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MusicFiles musicFiles = musicFilesList.get(position);
 
         holder.tvMusicTitle.setText(musicFiles.getTitle());
@@ -62,12 +63,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MusicPlayerActivity.class);
+                intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
 
     }
-
 
     @Override
     public int getItemCount() {

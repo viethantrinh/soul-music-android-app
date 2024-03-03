@@ -11,9 +11,7 @@ import net.branium.R;
 import net.branium.view.fragments.auth.SignInFragment;
 
 public class AuthActivity extends AppCompatActivity {
-
     FrameLayout frmLayoutAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

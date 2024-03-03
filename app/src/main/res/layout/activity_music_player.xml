@@ -110,7 +110,7 @@
         app:srcCompat="@drawable/ic_skip_previous_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/flt_music_player_play_pause"
+        android:id="@+id/flt_btn_music_player_play_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/medium_green"
@@ -125,7 +125,7 @@
         app:shapeAppearance="@style/circular" />
 
     <ImageView
-        android:id="@+id/iv_music_player_suffle"
+        android:id="@+id/iv_music_player_shuffle"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="55dp"

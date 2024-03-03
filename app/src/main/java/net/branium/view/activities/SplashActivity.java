@@ -24,13 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import net.branium.R;
 import net.branium.model.MusicFiles;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
-    public static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
+    public static List<MusicFiles> musicFiles = new ArrayList<>();
     private Handler handler;
     private FirebaseAuth mAuth;
 
