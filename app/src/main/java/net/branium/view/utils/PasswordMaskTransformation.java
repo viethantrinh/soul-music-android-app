@@ -1,4 +1,4 @@
-package net.branium.utils;
+package net.branium.view.utils;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;

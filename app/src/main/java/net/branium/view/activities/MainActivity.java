@@ -1,11 +1,15 @@
 package net.branium.view.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bottom navigation
         bottomNavigation = findViewById(R.id.bottom_navigation);
         viewPagerMain = findViewById(R.id.view_pager_main);
-
         bottomNavigation.setSelectedItemId(R.id.nav_home);
         viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 List.of(new HomeFragment(), new PlaylistFragment(), new RankFragment(), new LoveFragment(), new UserFragment())
         );
         viewPagerMain.setAdapter(viewPagerAdapter);
-
         viewPagerMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
             }
         });
-
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -84,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
+
 }
