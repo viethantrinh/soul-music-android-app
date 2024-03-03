@@ -7,9 +7,8 @@
     android:background="@color/main_background"
     tools:context=".view.fragments.main.playlist.PlaylistFragment">
 
-
     <TextView
-        android:id="@+id/textViewLibrary"
+        android:id="@+id/tv_library"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -23,24 +22,37 @@
 
 
     <ImageView
-        android:id="@+id/imageViewSearch"
+        android:id="@+id/iv_playlist_search"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_search_24"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewLibrary"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_library"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewLibrary" />
+        app:layout_constraintTop_toTopOf="@+id/tv_library" />
 
     <ImageView
-        android:id="@+id/imageViewNotification"
+        android:id="@+id/iv_playlist_notification"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="15dp"
         android:src="@drawable/ic_notification_24"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewSearch"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewSearch"
-        app:layout_constraintTop_toTopOf="@+id/imageViewSearch" />
+        app:layout_constraintBottom_toBottomOf="@+id/iv_playlist_search"
+        app:layout_constraintEnd_toStartOf="@+id/iv_playlist_search"
+        app:layout_constraintTop_toTopOf="@+id/iv_playlist_search" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_playlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_library" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

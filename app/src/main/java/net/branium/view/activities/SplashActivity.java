@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
-    public ArrayList<MusicFiles> musicFiles = new ArrayList<>();
+    public static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
     private Handler handler;
     private FirebaseAuth mAuth;
 
