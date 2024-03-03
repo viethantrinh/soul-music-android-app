@@ -1,4 +1,4 @@
-package net.branium.view.fragments.main.playlist;
+package net.branium.view.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.branium.R;
-import net.branium.model.MusicFiles;
+import net.branium.model.Song;
 import net.branium.view.activities.SplashActivity;
 import net.branium.view.adapters.MusicAdapter;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class PlaylistFragment extends Fragment {
     RecyclerView recyclerView;
     MusicAdapter musicAdapter;
-    List<MusicFiles> musicFilesList = new ArrayList<>();
+    List<Song> songList = new ArrayList<>();
 
 
     @Override
@@ -32,10 +32,10 @@ public class PlaylistFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_playlist);
         recyclerView.setHasFixedSize(true);
 
-        musicFilesList = SplashActivity.musicFiles;
+        songList = SplashActivity.musicFiles;
 
-        if (!(musicFilesList.isEmpty())) {
-            musicAdapter = new MusicAdapter(getContext(), musicFilesList);
+        if (!(songList.isEmpty())) {
+            musicAdapter = new MusicAdapter(getContext(), songList);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(musicAdapter);
         }

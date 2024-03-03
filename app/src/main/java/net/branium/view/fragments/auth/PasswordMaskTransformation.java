@@ -1,4 +1,4 @@
-package net.branium.view.utils;
+package net.branium.view.fragments.auth;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;

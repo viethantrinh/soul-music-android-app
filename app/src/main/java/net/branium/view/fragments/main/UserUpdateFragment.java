@@ -1,4 +1,4 @@
-package net.branium.view.fragments.main.user;
+package net.branium.view.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
+import net.branium.view.fragments.main.UserFragment;
 
 public class UserUpdateFragment extends Fragment {
     String userUID;

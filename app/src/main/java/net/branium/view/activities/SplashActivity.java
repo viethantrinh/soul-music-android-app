@@ -22,14 +22,16 @@ import androidx.core.content.ContextCompat;
 import com.google.firebase.auth.FirebaseAuth;
 
 import net.branium.R;
-import net.branium.model.MusicFiles;
+import net.branium.model.Song;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
-    public static List<MusicFiles> musicFiles = new ArrayList<>();
+    public static List<Song> musicFiles = new ArrayList<>();
+    public static boolean shuffleBoolean = false;
+    public static boolean repeatBoolean = false;
     private Handler handler;
     private FirebaseAuth mAuth;
 
@@ -43,8 +45,8 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public static ArrayList<MusicFiles> getAllAudio(Context context) {
-        ArrayList<MusicFiles> tempAudioList = new ArrayList<>();
+    public static ArrayList<Song> getAllAudio(Context context) {
+        ArrayList<Song> tempAudioList = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projections = {
                 MediaStore.Audio.Media.ALBUM,
@@ -75,9 +77,9 @@ public class SplashActivity extends AppCompatActivity {
                     String duration = cursor.getString(2);
                     String path = cursor.getString(3);
                     String artist = cursor.getString(4);
-                    MusicFiles musicFiles = new MusicFiles(path, title, artist, album, duration);
+                    Song song = new Song(path, title, artist, album, duration);
                     Log.e("HAHA: ", "Title" + title);
-                    tempAudioList.add(musicFiles);
+                    tempAudioList.add(song);
                 } while (cursor.moveToNext());
             }
             cursor.close();

@@ -1,4 +1,4 @@
-package net.branium.view.fragments.main.rank;
+package net.branium.view.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

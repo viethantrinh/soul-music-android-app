@@ -1,6 +1,8 @@
 package net.branium.view.activities;
 
 import static net.branium.view.activities.SplashActivity.musicFiles;
+import static net.branium.view.activities.SplashActivity.repeatBoolean;
+import static net.branium.view.activities.SplashActivity.shuffleBoolean;
 
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -18,12 +20,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import net.branium.R;
-import net.branium.model.MusicFiles;
+import net.branium.model.Song;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class MusicPlayerActivity extends AppCompatActivity {
+public class MusicPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     private ImageView ivMusicPlayerCloseDown;
     private ImageView ivMusicPlayerOption;
     private ImageView ivMusicPlayerPhoto;
@@ -38,7 +41,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
     private ImageView ivMusicPlayerSkipNext;
     private FloatingActionButton fltBtnMusicPlayerPlayPause;
     private int position = -1;
-    static List<MusicFiles> listSongs = new ArrayList<>();
+    static List<Song> listSongs = new ArrayList<>();
     static Uri uri;
     static MediaPlayer mediaPlayer;
     private Handler handler = new Handler();
@@ -54,6 +57,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
         getIntentMethod();
         tvMusicPlayerTitle.setText(listSongs.get(position).getTitle());
         tvMusicPlayerArtist.setText(listSongs.get(position).getArtist());
+        mediaPlayer.setOnCompletionListener(this);
         seekBarMusicPlayer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -81,6 +85,32 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     tvMusicPlayerDurationRun.setText(formattedTime(mCurrentPosition));
                 }
                 handler.postDelayed(this, 1000);
+            }
+        });
+
+        ivMusicPlayerShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (shuffleBoolean) {
+                    shuffleBoolean = false;
+                    ivMusicPlayerShuffle.setImageResource(R.drawable.ic_shuffle_off_24);
+                } else {
+                    shuffleBoolean = true;
+                    ivMusicPlayerShuffle.setImageResource(R.drawable.ic_shuffle_on_24);
+                }
+            }
+        });
+
+        ivMusicPlayerRepeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (repeatBoolean) {
+                    repeatBoolean = false;
+                    ivMusicPlayerRepeat.setImageResource(R.drawable.ic_repeat_off_24);
+                } else {
+                    repeatBoolean = true;
+                    ivMusicPlayerRepeat.setImageResource(R.drawable.ic_repeat_on_24);
+                }
             }
         });
     }
@@ -174,7 +204,13 @@ public class MusicPlayerActivity extends AppCompatActivity {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            position = ((position + 1) % listSongs.size());
+            if (shuffleBoolean && !repeatBoolean) {
+                position = getRandom(listSongs.size() - 1);
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = ((position + 1) % listSongs.size());
+            } else {
+                // position is position
+            }
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             metaData(uri);
@@ -191,11 +227,19 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
-            fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_pause_24);
+            mediaPlayer.setOnCompletionListener(this);
+            fltBtnMusicPlayerPlayPause.setBackgroundResource(R.drawable.ic_pause_24);
             mediaPlayer.start();
         } else {
             mediaPlayer.stop();
             mediaPlayer.release();
+            if (shuffleBoolean && !repeatBoolean) {
+                position = getRandom(listSongs.size() - 1);
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = ((position + 1) % listSongs.size());
+            } else {
+                // position is position
+            }
             position = ((position + 1) % listSongs.size());
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
@@ -213,14 +257,21 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
-            fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_play_24);
+            mediaPlayer.setOnCompletionListener(this);
+            fltBtnMusicPlayerPlayPause.setBackgroundResource(R.drawable.ic_play_24);
         }
     }
     private void skipPreviousBtnClicked() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            position = (position - 1) < 0 ? (listSongs.size() - 1) : (position - 1);
+            if (shuffleBoolean && !repeatBoolean) {
+                position = getRandom(listSongs.size() - 1);
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = (position - 1) < 0 ? (listSongs.size() - 1) : (position - 1);
+            } else {
+                // position is position
+            }
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             metaData(uri);
@@ -237,12 +288,18 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
-            fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_pause_24);
+            fltBtnMusicPlayerPlayPause.setBackgroundResource(R.drawable.ic_pause_24);
             mediaPlayer.start();
         } else {
             mediaPlayer.stop();
             mediaPlayer.release();
-            position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1));
+            if (shuffleBoolean && !repeatBoolean) {
+                position = getRandom(listSongs.size() - 1);
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = (position - 1) < 0 ? (listSongs.size() - 1) : (position - 1);
+            } else {
+                // position is position
+            }
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             metaData(uri);
@@ -259,10 +316,14 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
             });
-            fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_play_24);
+            fltBtnMusicPlayerPlayPause.setBackgroundResource(R.drawable.ic_play_24);
         }
     }
 
+    private int getRandom(int i) {
+        Random random = new Random();
+        return random.nextInt(i + 1);
+    }
 
     private void metaData(Uri uri) {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
@@ -324,5 +385,15 @@ public class MusicPlayerActivity extends AppCompatActivity {
         ivMusicPlayerSkipPrevious = findViewById(R.id.iv_music_player_skip_previous);
         ivMusicPlayerSkipNext = findViewById(R.id.iv_music_player_skip_next);
         fltBtnMusicPlayerPlayPause = findViewById(R.id.flt_btn_music_player_play_pause);
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        skipNextBtnClicked();
+        if (mediaPlayer != null) {
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(this);
+        }
     }
 }

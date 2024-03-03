@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="670dp"
     android:background="#303030"
-    tools:context=".view.fragments.main.user.UserFragment">
+    tools:context=".view.fragments.main.UserFragment">
 
     <TextView
         android:id="@+id/tv_username_account"

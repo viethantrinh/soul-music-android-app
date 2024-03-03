@@ -12,11 +12,11 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
 import net.branium.view.adapters.ViewPagerAdapter;
-import net.branium.view.fragments.main.home.HomeFragment;
-import net.branium.view.fragments.main.love.LoveFragment;
-import net.branium.view.fragments.main.playlist.PlaylistFragment;
-import net.branium.view.fragments.main.rank.RankFragment;
-import net.branium.view.fragments.main.user.UserFragment;
+import net.branium.view.fragments.main.HomeFragment;
+import net.branium.view.fragments.main.LoveFragment;
+import net.branium.view.fragments.main.PlaylistFragment;
+import net.branium.view.fragments.main.RankFragment;
+import net.branium.view.fragments.main.UserFragment;
 
 import java.util.List;
 

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import net.branium.R;
-import net.branium.model.MusicFiles;
+import net.branium.model.Song;
 import net.branium.view.activities.MusicPlayerActivity;
 
 import java.io.IOException;
@@ -26,12 +25,12 @@ import java.util.List;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
     private Context context;
-    private List<MusicFiles> musicFilesList;
+    private List<Song> songList;
 
 
-    public MusicAdapter(Context context, List<MusicFiles> musicFilesList) {
+    public MusicAdapter(Context context, List<Song> songList) {
         this.context = context;
-        this.musicFilesList = musicFilesList;
+        this.songList = songList;
     }
 
     @NonNull
@@ -43,13 +42,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        MusicFiles musicFiles = musicFilesList.get(position);
+        Song song = songList.get(position);
 
-        holder.tvMusicTitle.setText(musicFiles.getTitle());
-        holder.tvMusicArtist.setText(musicFiles.getArtist());
+        holder.tvMusicTitle.setText(song.getTitle());
+        holder.tvMusicArtist.setText(song.getArtist());
         byte[] image = new byte[0];
         try {
-            image = getMusicPhoto(musicFiles.getPath());
+            image = getMusicPhoto(song.getPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +71,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
 
     @Override
     public int getItemCount() {
-        return musicFilesList.size();
+        return songList.size();
     }
 
     public class MusicViewHolder extends RecyclerView.ViewHolder {

@@ -1,4 +1,4 @@
-package net.branium.view.fragments.main.user;
+package net.branium.view.fragments.main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
