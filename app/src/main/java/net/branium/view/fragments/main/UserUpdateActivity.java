@@ -59,7 +59,7 @@ public class UserUpdateActivity extends AppCompatActivity {
         mt_btn_back_user_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new UserFragment());
+                finish();
             }
         });
     }
@@ -69,13 +69,6 @@ public class UserUpdateActivity extends AppCompatActivity {
         // update username
         userRef.update("username", username);
         Toast.makeText(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-    }
-
-    private void loadFragment(Fragment fragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.body_container, fragment);
-        transaction.commit();
     }
 
     private void GetUserByUID() {

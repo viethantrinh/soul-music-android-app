@@ -1,8 +1,12 @@
 package net.branium.view.activities;
 
+
+import static net.branium.view.fragments.main.PlaylistFragment.MY_SORT_PREF;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -45,9 +49,11 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public static ArrayList<Song> getAllAudio(Context context) {
+    public ArrayList<Song> getAllAudio(Context context) {
         ArrayList<Song> tempAudioList = new ArrayList<>();
+        String order = null;
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
         String[] projections = {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.TITLE,
