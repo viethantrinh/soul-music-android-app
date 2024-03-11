@@ -77,7 +77,8 @@ public class UserFragment extends Fragment {
         mt_btn_update_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new UserUpdateFragment());
+                Intent intent = new Intent(getContext(), UserUpdateActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -160,10 +161,6 @@ public class UserFragment extends Fragment {
         Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), AuthActivity.class);
         startActivity(intent);
-    }
-
-    private void UpdateUserAccount() {
-
     }
 
     private void showConfirmationDialog(String title, String message, String button, DialogInterface.OnClickListener positiveClickListener) {

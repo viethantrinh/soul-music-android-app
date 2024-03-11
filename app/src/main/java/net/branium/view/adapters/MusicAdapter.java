@@ -21,11 +21,12 @@ import net.branium.model.Song;
 import net.branium.view.activities.MusicPlayerActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
     private Context context;
-    private List<Song> songList;
+    public static List<Song> songList;
 
 
     public MusicAdapter(Context context, List<Song> songList) {
@@ -96,5 +97,11 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         byte[] photo = retriever.getEmbeddedPicture();
         retriever.release();
         return photo;
+    }
+
+    public void updateList(ArrayList<Song> songs) {
+        songList = new ArrayList<>();
+        songList.addAll(songs);
+        notifyDataSetChanged();
     }
 }

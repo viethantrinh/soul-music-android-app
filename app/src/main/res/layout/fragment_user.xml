@@ -76,7 +76,8 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_image_user"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="@+id/iv_image_user"
-        app:layout_constraintTop_toBottomOf="@+id/iv_image_user" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_image_user"
+        tools:ignore="TextSizeCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mt_btn_delete_account"
