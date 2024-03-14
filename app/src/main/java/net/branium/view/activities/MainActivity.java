@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
     BottomNavigationView bottomNavigation;
-    ViewPager2 viewPagerMain;
+    public static ViewPager2 viewPagerMain;
     ViewPagerAdapter viewPagerAdapter;
     MusicService musicService;
     public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";

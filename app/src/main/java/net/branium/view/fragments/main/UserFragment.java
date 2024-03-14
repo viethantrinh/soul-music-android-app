@@ -32,13 +32,11 @@ import net.branium.view.activities.AuthActivity;
 
 public class UserFragment extends Fragment {
     String userUID;
-
     MaterialButton mt_btn_delete_account;
     MaterialButton mt_btn_logout;
     MaterialButton mt_btn_update_account;
     TextView tv_username_account;
     TextView tv_email_account;
-
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     DocumentReference userRef;

@@ -6,4 +6,11 @@
     <style name="rounded_music_photo">
         <item name="cornerSize">10%</item>
     </style>
+    <style name="home_rounded_music_photo">
+        <item name="cornerSizeTopLeft">5%</item>
+        <item name="cornerSizeBottomLeft">5%</item>
+    </style>
+    <style name="home_rounded_album_photo">
+        <item name="cornerSize">10%</item>
+    </style>
 </resources>

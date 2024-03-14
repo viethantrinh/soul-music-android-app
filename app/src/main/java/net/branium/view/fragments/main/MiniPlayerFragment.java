@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +30,6 @@ import net.branium.R;
 import net.branium.service.MusicService;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class MiniPlayerFragment extends Fragment implements ServiceConnection {
     ImageView nextBtn;
@@ -69,7 +67,7 @@ public class MiniPlayerFragment extends Fragment implements ServiceConnection {
                         if(getActivity() != null) {
                             SharedPreferences.Editor editor = getActivity().getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE).edit();
                             editor.putString(MUSIC_FILE, musicService.songsList
-                                    .get(musicService.position).getPath());
+                                    .get(musicService.position).getSource());
                             editor.putString(ARTIST_NAME, musicService.songsList
                                     .get(musicService.position).getArtist());
                             editor.putString(SONG_NAME, musicService.songsList

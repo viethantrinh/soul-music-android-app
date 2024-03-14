@@ -24,12 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder> {
+public class PlaylistMusicAdapter extends RecyclerView.Adapter<PlaylistMusicAdapter.MusicViewHolder> {
     private Context context;
     public static List<Song> songList;
 
 
-    public MusicAdapter(Context context, List<Song> songList) {
+    public PlaylistMusicAdapter(Context context, List<Song> songList) {
         this.context = context;
         this.songList = songList;
     }
@@ -37,7 +37,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
     @NonNull
     @Override
     public MusicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_music_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.playlist_item_music_layout, parent, false);
         return new MusicViewHolder(view);
     }
 
@@ -49,7 +49,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHol
         holder.tvMusicArtist.setText(song.getArtist());
         byte[] image = new byte[0];
         try {
-            image = getMusicPhoto(song.getPath());
+            image = getMusicPhoto(song.getSource());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

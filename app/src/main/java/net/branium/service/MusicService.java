@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -135,7 +134,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     }
     public void createMediaPlayer(int positionInner) {
         position = positionInner;
-        uri = Uri.parse(songsList.get(position).getPath());
+        uri = Uri.parse(songsList.get(position).getSource());
         SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE).edit();
         editor.putString(MUSIC_FILE, uri.toString());
         editor.putString(ARTIST_NAME, songsList.get(position).getArtist());
