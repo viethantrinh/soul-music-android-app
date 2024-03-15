@@ -220,6 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:indeterminate="true"
+            android:indeterminateDuration="5000"
             android:indeterminateTint="@color/medium_green"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"

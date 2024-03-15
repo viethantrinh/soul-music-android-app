@@ -53,7 +53,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         gsc = GoogleSignIn.getClient(requireContext(), gso);
         userRepo = new UserRepository();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
-        registerClickEvent();
+        registerEventListener();
         return binding.getRoot();
     }
 
@@ -74,7 +74,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void registerClickEvent() {
+    private void registerEventListener() {
         binding.tvForgetPassword.setOnClickListener(this);
         binding.mtBtnRegister.setOnClickListener(this);
         binding.ivShowPwd.setOnClickListener(this);
@@ -122,8 +122,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private void signInWithFireBase() {
         String email = binding.etLoginEmail.getText().toString();
         String password = binding.etLoginPassword.getText().toString();
+        binding.pbLoginProcess.setVisibility(View.VISIBLE);
         if (checkInput(email, password)) {
-            binding.pbLoginProcess.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -133,6 +133,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     } else {
                         Toast.makeText(getContext(), task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
+                        binding.pbLoginProcess.setVisibility(View.INVISIBLE);
                     }
                 }
             });
@@ -161,7 +162,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                                    User user = new User(firebaseUser.getUid(), firebaseUser.getDisplayName(), firebaseUser.getEmail(), "google");
+                                    User user = new User(firebaseUser.getUid(), firebaseUser.getDisplayName(), firebaseUser.getEmail(), null);
                                     userRepo.createUser(user);
                                     Intent intent = new Intent(requireActivity(), MainActivity.class);
                                     startActivity(intent);

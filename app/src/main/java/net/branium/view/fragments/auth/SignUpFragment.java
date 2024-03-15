@@ -40,7 +40,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false);
         binding.setUser(user);
-        registerClickEvent();
+        registerEventListener();
         return binding.getRoot();
     }
 
@@ -145,7 +145,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         return valid;
     }
 
-    private void registerClickEvent() {
+    private void registerEventListener() {
         binding.tvAlreadyHaveAccount.setOnClickListener(this);
         binding.ivRegisterShowPwd.setOnClickListener(this);
         binding.ivRegisterShowRePwd.setOnClickListener(this);
