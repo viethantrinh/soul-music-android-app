@@ -1,80 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:backgroundTint="@color/black"
+    app:cardCornerRadius="18dp"
     tools:context=".view.fragments.main.MiniPlayerFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/rl_card_mini_player"
-        android:background="@drawable/round_corner_2"
-        android:padding="5dp">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_mini_album_art"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo_image" />
+            android:src="@drawable/logo_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/mini_player_rounded_music_photo" />
 
         <ImageView
             android:id="@+id/iv_mini_skip_next_bottom"
             android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="0dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="46dp"
-            android:src="@drawable/ic_skip_next_24" />
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_skip_next_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_play_pause_mini_player"
+            app:layout_constraintStart_toEndOf="@+id/fab_play_pause_mini_player"
+            app:layout_constraintTop_toTopOf="@+id/fab_play_pause_mini_player" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_play_pause_mini_player"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="4dp"
             android:layout_toStartOf="@id/iv_mini_skip_next_bottom"
             android:backgroundTint="@color/medium_green"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_play_24"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/circular" />
 
         <TextView
             android:id="@+id/tv_song_name_mini_player"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="15dp"
             android:layout_toStartOf="@id/fab_play_pause_mini_player"
             android:layout_toEndOf="@id/iv_mini_album_art"
+            android:fontFamily="@font/inter_semibold"
             android:maxLines="1"
             android:text="Song Name Is Here"
             android:textColor="#FFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_mini_album_art"
+            app:layout_constraintEnd_toStartOf="@+id/fab_play_pause_mini_player"
+            app:layout_constraintStart_toEndOf="@+id/iv_mini_album_art"
+            app:layout_constraintTop_toTopOf="@+id/iv_mini_album_art"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tv_song_artist_mini_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_song_name_mini_player"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="5dp"
             android:layout_toStartOf="@id/fab_play_pause_mini_player"
             android:layout_toEndOf="@id/iv_mini_album_art"
             android:maxLines="1"
             android:text="Artist Name"
+            android:fontFamily="@font/inter_medium"
             android:textColor="#FFF"
-            android:textSize="12sp" />
-    </RelativeLayout>
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_song_name_mini_player"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_song_name_mini_player"
+            app:layout_constraintTop_toBottomOf="@+id/tv_song_name_mini_player" />
 
-</FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -1,6 +1,7 @@
 package net.branium.utils;
 
 import net.branium.model.Album;
+import net.branium.model.Playlist;
 import net.branium.model.Song;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public class Constants {
 
 
     // static data for home fragment
-    public static final List<Song> songList = new ArrayList<>();
-    public static final List<Song> homeSongList = new ArrayList<>();
-    public static final List<Album> albumList = new ArrayList<>();
+    public static final List<Song> SONG_LIST = new ArrayList<>();
+    public static final List<Album> ALBUM_LIST = new ArrayList<>();
+    public static final List<Playlist> USER_PLAYLIST_LIST = new ArrayList<>();
 
 
 }

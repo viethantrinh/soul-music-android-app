@@ -18,12 +18,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import net.branium.R;
 import net.branium.databinding.FragmentHomeBinding;
 import net.branium.model.Album;
+import net.branium.model.Playlist;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
 import net.branium.view.adapters.HomeAlbumAdapter;
+import net.branium.view.adapters.HomeLovePlaylistAdapter;
 import net.branium.view.adapters.HomeMusicAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
 
@@ -33,33 +38,63 @@ public class HomeFragment extends Fragment {
     private HomeFragmentViewModel homeFragmentViewModel;
     private HomeMusicAdapter homeMusicAdapter;
     private HomeAlbumAdapter homeAlbumAdapter;
-    private FragmentHomeBinding fragmentHomeBinding;
-    private RecyclerView homeRecycleViewListSong;
-    private RecyclerView homeRecycleViewListAlbum;
+    private HomeLovePlaylistAdapter homeLovePlaylistAdapter;
+    private FragmentHomeBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-
-        if (!Constants.homeSongList.isEmpty()) {
-            homeRecycleViewListSong = fragmentHomeBinding.homeRecycleViewListSong;
-            homeMusicAdapter = new HomeMusicAdapter(Constants.homeSongList, requireContext());
-            homeRecycleViewListSong.setLayoutManager(new GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false));
-            homeRecycleViewListSong.setAdapter(homeMusicAdapter);
-        } else {
-            getSongList();
-            getAlbumList();
-        }
-        return fragmentHomeBinding.getRoot();
+        handleAlbumSlideConflict();
+        getSongList();
+        getAlbumList();
+        getUserLovePlaylist();
+        return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        fragmentHomeBinding.homeRecycleViewListAlbum.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+    private void getUserLovePlaylist() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = firebaseUser.getUid();
+        homeFragmentViewModel.getAllUserPlaylist(currentUserId).observe(requireActivity(), new Observer<List<Playlist>>() {
+            @Override
+            public void onChanged(List<Playlist> playlists) {
+                homeLovePlaylistAdapter = new HomeLovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
+                binding.homeRecycleViewUserLovePlaylist.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+                binding.homeRecycleViewUserLovePlaylist.setAdapter(homeLovePlaylistAdapter);
+                homeLovePlaylistAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void getAlbumList() {
+        homeFragmentViewModel.getAllAlbums().observe(requireActivity(), new Observer<List<Album>>() {
+            @Override
+            public void onChanged(List<Album> albumList) {
+                homeAlbumAdapter = new HomeAlbumAdapter(Constants.ALBUM_LIST, requireContext());
+                binding.homeRecycleViewListAlbum.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+                binding.homeRecycleViewListAlbum.setAdapter(homeAlbumAdapter);
+                homeAlbumAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void getSongList() {
+        homeFragmentViewModel.getAllSongs().observe(requireActivity(), new Observer<List<Song>>() {
+            @Override
+            public void onChanged(List<Song> songList) {
+                homeMusicAdapter = new HomeMusicAdapter(Constants.SONG_LIST, requireContext());
+                binding.homeRecycleViewListSong.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
+                binding.homeRecycleViewListSong.setAdapter(homeMusicAdapter);
+                homeMusicAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void handleAlbumSlideConflict() {
+        binding.homeRecycleViewListAlbum.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             int lastX = 0;
+
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 switch (e.getAction()) {
@@ -68,8 +103,7 @@ public class HomeFragment extends Fragment {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         boolean isScrollingRight = e.getX() < lastX;
-                        if ((isScrollingRight && ((LinearLayoutManager) homeRecycleViewListAlbum.getLayoutManager()).findLastCompletelyVisibleItemPosition() == homeRecycleViewListAlbum.getAdapter().getItemCount() - 1) ||
-                                (!isScrollingRight && ((LinearLayoutManager) homeRecycleViewListAlbum.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)) {
+                        if ((isScrollingRight && ((LinearLayoutManager) binding.homeRecycleViewListAlbum.getLayoutManager()).findLastCompletelyVisibleItemPosition() == binding.homeRecycleViewListAlbum.getAdapter().getItemCount() - 1) || (!isScrollingRight && ((LinearLayoutManager) binding.homeRecycleViewListAlbum.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)) {
                             viewPagerMain.setUserInputEnabled(true);
                         } else {
                             viewPagerMain.setUserInputEnabled(false);
@@ -90,33 +124,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
-            }
-        });
-    }
-
-    private void getAlbumList() {
-        homeFragmentViewModel.getAllAlbums().observe(requireActivity(), new Observer<List<Album>>() {
-            @Override
-            public void onChanged(List<Album> albumListFromLiveData) {
-                Constants.albumList.addAll(albumListFromLiveData);
-                homeRecycleViewListAlbum = fragmentHomeBinding.homeRecycleViewListAlbum;
-                homeAlbumAdapter = new HomeAlbumAdapter(Constants.albumList, requireContext());
-                homeRecycleViewListAlbum.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-                homeRecycleViewListAlbum.setAdapter(homeAlbumAdapter);
-            }
-        });
-    }
-
-    private void getSongList() {
-        homeFragmentViewModel.getAllSongs().observe(requireActivity(), new Observer<List<Song>>() {
-            @Override
-            public void onChanged(List<Song> songListFromLiveData) {
-                Constants.songList.addAll(songListFromLiveData);
-                Constants.homeSongList.addAll(Constants.songList.subList(0, 8));
-                homeRecycleViewListSong = fragmentHomeBinding.homeRecycleViewListSong;
-                homeMusicAdapter = new HomeMusicAdapter(Constants.homeSongList, requireContext());
-                homeRecycleViewListSong.setLayoutManager(new GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false));
-                homeRecycleViewListSong.setAdapter(homeMusicAdapter);
             }
         });
     }

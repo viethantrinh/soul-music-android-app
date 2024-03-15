@@ -1,15 +1,14 @@
 package net.branium.repository;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import net.branium.model.Song;
 import net.branium.serviceapi.RetrofitInstance;
 import net.branium.serviceapi.SongAPIService;
+import net.branium.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SongRepository {
-    private List<Song> songList = new ArrayList<>();
     private MutableLiveData<List<Song>> mutableLiveDataSongList = new MutableLiveData<>();
     private Application application;
 
@@ -32,11 +30,11 @@ public class SongRepository {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 List<Song> songListResponse = response.body();
-                Log.e("HHHHH", songListResponse.toString());
                 if (songListResponse != null && !songListResponse.isEmpty()) {
-                    Collections.shuffle(songListResponse);
-                    songList = songListResponse;
-                    mutableLiveDataSongList.setValue(songList);
+                    Constants.SONG_LIST.clear();
+                    Constants.SONG_LIST.addAll(songListResponse);
+                    Collections.shuffle(Constants.SONG_LIST);
+                    mutableLiveDataSongList.setValue(Constants.SONG_LIST);
                 }
             }
 

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         // Bottom navigation
         bottomNavigation = findViewById(R.id.bottom_navigation);
         viewPagerMain = findViewById(R.id.view_pager_main);
+        viewPagerMain.setOffscreenPageLimit(5);
         bottomNavigation.setSelectedItemId(R.id.nav_home);
         viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),

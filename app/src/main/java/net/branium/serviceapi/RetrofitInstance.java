@@ -33,5 +33,13 @@ public class RetrofitInstance {
         return retrofit.create(UserAPIService.class);
     }
 
+    public static PlaylistAPIService getPlaylistAPIService() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(PlaylistAPIService.class);
+    }
+
 
 }

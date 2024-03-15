@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import net.branium.model.Album;
 import net.branium.serviceapi.RetrofitInstance;
+import net.branium.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +16,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AlbumRepository {
-    private List<Album> albumList = new ArrayList<>();
     private MutableLiveData<List<Album>> mutableLiveDataAlbumList = new MutableLiveData<>();
     private Application application;
 
@@ -32,9 +31,10 @@ public class AlbumRepository {
             public void onResponse(Call<List<Album>> call, Response<List<Album>> response) {
                 List<Album> albumListResponse = response.body();
                 if (albumListResponse != null && !albumListResponse.isEmpty()) {
-                    albumList = albumListResponse;
-                    Collections.shuffle(albumList);
-                    mutableLiveDataAlbumList.setValue(albumList);
+                    Constants.ALBUM_LIST.clear();
+                    Constants.ALBUM_LIST.addAll(albumListResponse);
+                    Collections.shuffle(Constants.ALBUM_LIST);
+                    mutableLiveDataAlbumList.setValue(Constants.ALBUM_LIST);
                 }
             }
 

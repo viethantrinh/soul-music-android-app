@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/inter_semibold"
+            android:fontFamily="@font/inter_bold"
             android:text="Khám phá"
             android:textColor="@color/white"
             android:textSize="36sp"
@@ -26,7 +26,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="530dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -54,29 +54,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="700dp"
-                    android:layout_marginEnd="85dp"
-                    android:text="NGUUUUUUUUUU"
-                    android:textColor="@color/white"
-                    android:textSize="32sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/home_recycle_view_list_song"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Bài hát có thể bạn sẽ thích"
+                    android:text="Bài hát được đề xuất"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,9 +71,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Danh sách Album"
+                    android:text="Album của năm"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/home_recycle_view_list_song" />
 
@@ -112,17 +97,21 @@
                     android:text="Danh sách yêu thích của bạn"
                     android:textColor="@color/white"
                     android:fontFamily="@font/inter_semibold"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/home_recycle_view_list_album" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_recycle_view_user_love_playlist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    tools:itemCount="1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
