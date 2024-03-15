@@ -10,7 +10,7 @@ public class RetrofitInstance {
 
     public static SongAPIService getSongAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.OPPO_FULL_PATH_ON_WINDOW)
+                .baseUrl(Constants.EMULATOR_FULL_PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -19,9 +19,19 @@ public class RetrofitInstance {
 
     public static AlbumAPIService getAlbumAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.OPPO_FULL_PATH_ON_WINDOW)
+                .baseUrl(Constants.EMULATOR_FULL_PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(AlbumAPIService.class);
     }
+
+    public static UserAPIService getUserAPIService() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(UserAPIService.class);
+    }
+
+
 }

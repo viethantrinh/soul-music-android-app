@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+
         if (!Constants.homeSongList.isEmpty()) {
             homeRecycleViewListSong = fragmentHomeBinding.homeRecycleViewListSong;
             homeMusicAdapter = new HomeMusicAdapter(Constants.homeSongList, requireContext());

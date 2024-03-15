@@ -1,9 +1,24 @@
 package net.branium.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+
+    @SerializedName("id")
+    @Expose
     private String id;
+
+    @SerializedName("username")
+    @Expose
     private String username;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("password")
+    @Expose
     private String password;
 
     public User() {

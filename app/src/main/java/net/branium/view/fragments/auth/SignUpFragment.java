@@ -30,6 +30,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
+import net.branium.model.User;
+import net.branium.repository.SongRepository;
+import net.branium.repository.UserRepository;
 import net.branium.view.activities.MainActivity;
 
 import java.util.HashMap;
@@ -200,6 +203,8 @@ public class SignUpFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     Intent intent = new Intent(getActivity(), MainActivity.class);
+                                                    final User newUser = new User(mAuth.getUid(), username, email, password);
+                                                    new UserRepository().createUser(newUser);
                                                     startActivity(intent);
                                                     getActivity().finish();
                                                 }

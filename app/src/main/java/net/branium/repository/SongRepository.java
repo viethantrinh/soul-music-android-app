@@ -42,7 +42,7 @@ public class SongRepository {
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-                System.out.println(t.getMessage());
+
             }
         });
         return mutableLiveDataSongList;
