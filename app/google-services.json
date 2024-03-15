@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "41333975428-r3s7h9gpvklg57stjd2bo2u7fcet92u2.apps.googleusercontent.com",
+          "client_id": "41333975428-vh13t6qdr752l607m4bd8ehnc76h7n4e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.branium",
-            "certificate_hash": "438e679c837c1308b3792559027b9afa4946483b"
+            "certificate_hash": "fefae5ef0caf359a5f5ac73b10878264d4f3629f"
           }
         },
         {

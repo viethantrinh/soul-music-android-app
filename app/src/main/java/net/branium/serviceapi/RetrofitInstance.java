@@ -1,6 +1,6 @@
 package net.branium.serviceapi;
 
-import net.branium.view.utils.Constants;
+import net.branium.utils.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

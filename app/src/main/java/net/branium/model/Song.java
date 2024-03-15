@@ -1,7 +1,5 @@
 package net.branium.model;
 
-import android.content.Intent;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;

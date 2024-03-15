@@ -11,29 +11,22 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
 import net.branium.databinding.FragmentSignUpBinding;
 import net.branium.model.User;
 import net.branium.repository.UserRepository;
 import net.branium.view.activities.MainActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
@@ -47,13 +40,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false);
         binding.setUser(user);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         registerClickEvent();
+        return binding.getRoot();
     }
 
     @Override
@@ -69,6 +57,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             signUpWithFireBase();
         }
     }
+
     private void togglePasswordMask(EditText password, ImageView toggle) {
         if (password.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
             password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -78,6 +67,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             toggle.setImageResource(R.drawable.ic_show_pwd_24);
         }
     }
+
     private void signUpWithFireBase() {
         String username = user.getUsername();
         String email = user.getEmail();
@@ -89,7 +79,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(username)
                                 .build();
@@ -111,11 +101,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     }
                 }
             });
+            binding.pbRegisterProcess.setVisibility(View.INVISIBLE);
         }
     }
+
     private boolean checkInputs(String username, String email, String password, String rePassword) {
         boolean valid = true;
-        if ( username == null || username.isBlank() || username.isEmpty()) {
+        if (username == null || username.isBlank() || username.isEmpty()) {
             binding.etRegisterUsername.setError("Tên đăng nhập không được để trống!");
             valid = false;
         }
@@ -152,12 +144,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         return valid;
     }
+
     private void registerClickEvent() {
         binding.tvAlreadyHaveAccount.setOnClickListener(this);
         binding.ivRegisterShowPwd.setOnClickListener(this);
         binding.ivRegisterShowRePwd.setOnClickListener(this);
         binding.mtBtnConfirmRegister.setOnClickListener(this);
     }
+
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.from_left, R.anim.out_from_right);

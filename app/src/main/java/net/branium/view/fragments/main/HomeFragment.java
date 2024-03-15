@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,14 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.branium.R;
 import net.branium.databinding.FragmentHomeBinding;
 import net.branium.model.Album;
-import net.branium.model.HomeSong;
 import net.branium.model.Song;
+import net.branium.utils.Constants;
 import net.branium.view.adapters.HomeAlbumAdapter;
 import net.branium.view.adapters.HomeMusicAdapter;
-import net.branium.view.utils.Constants;
 import net.branium.viewmodel.HomeFragmentViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {

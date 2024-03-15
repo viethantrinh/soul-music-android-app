@@ -1,4 +1,4 @@
-package net.branium.view.utils;
+package net.branium.utils;
 
 import net.branium.model.Album;
 import net.branium.model.Song;
@@ -13,6 +13,10 @@ public class Constants {
     public static final String FULL_PATH = BASE_PATH + API_PATH + "/";
     public static final String EMULATOR_FULL_PATH = "http://10.0.2.2:1234/api/";
     public static final String OPPO_FULL_PATH_ON_WINDOW = "http://192.168.1.108:1234/api/";
+
+    // Lưu ý: nếu đăng nhập vs google không thành công thì gen ra một SHA 1 key bằng cách sử dụng ./gradlew signingReport
+    // sau đó add vào trong firebase
+    public static final String GOOGLE_SIGN_IN_KEY = "41333975428-s0f62era7i1uujcphvte64dbn3cjfp4d.apps.googleusercontent.com";
 
     // constants for service
 

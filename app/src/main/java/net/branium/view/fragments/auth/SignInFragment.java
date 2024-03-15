@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -24,214 +22,160 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
+import net.branium.databinding.FragmentSignInBinding;
+import net.branium.model.User;
+import net.branium.repository.UserRepository;
+import net.branium.utils.Constants;
 import net.branium.view.activities.MainActivity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class SignInFragment extends Fragment {
-    MaterialButton mtBtnRegister;
-    TextView tvForgetPassword;
-    FrameLayout frmLayoutAuth;
-    EditText etLoginEmail;
-    EditText etLoginPassword;
-    MaterialButton mtBtnLogin;
-    ProgressBar pbLoginProcess;
-    MaterialButton mtBtnLoginWithGoogle;
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    ImageView ivShowPwd;
-    int RC_SIGN_IN = 20;
+public class SignInFragment extends Fragment implements View.OnClickListener {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+    private UserRepository userRepo;
+    private FragmentSignInBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
-        mtBtnRegister = view.findViewById(R.id.mt_btn_register);
-        tvForgetPassword = view.findViewById(R.id.tv_forget_password);
-        frmLayoutAuth = requireActivity().findViewById(R.id.frm_layout_auth);
-        etLoginEmail = view.findViewById(R.id.et_login_email);
-        etLoginPassword = view.findViewById(R.id.et_login_password);
-        mtBtnLogin = view.findViewById(R.id.mt_btn_login);
-        pbLoginProcess = view.findViewById(R.id.pb_login_process);
-        ivShowPwd = view.findViewById(R.id.iv_show_pwd);
-        mtBtnLoginWithGoogle = view.findViewById(R.id.mt_btn_login_with_google);
-
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("41333975428-s0f62era7i1uujcphvte64dbn3cjfp4d.apps.googleusercontent.com").
-                requestEmail().build();
-        gsc = GoogleSignIn.getClient(getActivity(), gso);
-
-        return view;
+                .requestIdToken(Constants.GOOGLE_SIGN_IN_KEY)
+                .requestEmail()
+                .build();
+        gsc = GoogleSignIn.getClient(requireContext(), gso);
+        userRepo = new UserRepository();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
+        registerClickEvent();
+        return binding.getRoot();
     }
+
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // Xử lý sự kiện khi nhấn quên mật khẩu
-        tvForgetPassword.setOnClickListener(v -> setFragment(new ResetPasswordFragment()));
-
-        // Xử lý sự kiện khi nhấn nút đăng ký
-        mtBtnRegister.setOnClickListener(v -> setFragment(new SignUpFragment()));
-
-        mtBtnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInput()) {
-                    pbLoginProcess.setVisibility(View.VISIBLE);
-                    signInWithFireBase();
-                }
-            }
-        });
-
-        mtBtnLoginWithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInWithGoogle();
-            }
-        });
-
-        ivShowPwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                processPassword();
-            }
-        });
-
+    public void onClick(View v) {
+        var id = v.getId();
+        if (id == binding.tvForgetPassword.getId()) {
+            setFragment(new ResetPasswordFragment());
+        } else if (id == binding.mtBtnRegister.getId()) {
+            setFragment(new SignUpFragment());
+        } else if (id == binding.ivShowPwd.getId()) {
+            togglePasswordMask(binding.etLoginPassword, binding.ivShowPwd);
+        } else if (id == binding.mtBtnLogin.getId()) {
+            signInWithFireBase();
+        } else if (id == binding.mtBtnLoginWithGoogle.getId()) {
+            signInWithGoogle();
+        }
     }
 
-    private void processPassword() {
-        if (etLoginPassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
-            etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            ivShowPwd.setImageResource(R.drawable.ic_hidden_pwd_24);
+    private void registerClickEvent() {
+        binding.tvForgetPassword.setOnClickListener(this);
+        binding.mtBtnRegister.setOnClickListener(this);
+        binding.ivShowPwd.setOnClickListener(this);
+        binding.mtBtnLogin.setOnClickListener(this);
+        binding.mtBtnLoginWithGoogle.setOnClickListener(this);
+    }
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.from_right, R.anim.out_from_left);
+        fragmentTransaction.replace(requireActivity().findViewById(R.id.frm_layout_auth).getId(), fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void togglePasswordMask(EditText password, ImageView toggle) {
+        if (password.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
+            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            toggle.setImageResource(R.drawable.ic_hidden_pwd_24);
         } else {
-            etLoginPassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
-            ivShowPwd.setImageResource(R.drawable.ic_show_pwd_24);
+            password.setTransformationMethod(PasswordMaskTransformation.getInstance());
+            toggle.setImageResource(R.drawable.ic_show_pwd_24);
         }
     }
 
-    private void signInWithGoogle() {
-        Intent intent = gsc.getSignInIntent();
-        startActivityForResult(intent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                var idToken = account.getIdToken();
-                firebaseAuth(idToken);
-            } catch (ApiException e) {
-                Toast.makeText(getContext(), "Somethong wroing", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void firebaseAuth(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("id", user.getUid());
-                            map.put("username", user.getDisplayName());
-                            map.put("email", user.getEmail());
-
-                            db.collection("users")
-                                    .document(user.getUid())
-                                    .set(map)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Intent intent = new Intent(getContext(), MainActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getContext(), e.getMessage(),
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(getContext(), task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void signInWithFireBase() {
-        String email = etLoginEmail.getText().toString();
-        String password = etLoginPassword.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getContext(), task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            pbLoginProcess.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-    }
-
-    private boolean checkInput() {
+    private boolean checkInput(String email, String pasword) {
         boolean isValid = true;
-        if (etLoginEmail.getText().toString().isEmpty()) {
-            etLoginEmail.setError("Email không được để trống!");
+        if (email == null || email.isEmpty()) {
+            binding.etLoginEmail.setError("Email không được để trống!");
             isValid = false;
         }
 
-        if (!etLoginEmail.getText().toString().isEmpty() && !etLoginEmail.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
-            etLoginEmail.setError("Emai sai định dạng!");
+        if (email != null && !email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+            binding.etLoginEmail.setError("Emai sai định dạng!");
             isValid = false;
         }
 
-        if (etLoginPassword.getText().toString().isEmpty()) {
-            etLoginPassword.setError("Mật khẩu không được để trống!");
+        if (pasword == null || pasword.isEmpty()) {
+            binding.etLoginPassword.setError("Mật khẩu không được để trống!");
             isValid = false;
         }
 
         return isValid;
     }
 
-    private void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.from_right, R.anim.out_from_left);
-        fragmentTransaction.replace(frmLayoutAuth.getId(), fragment);
-        fragmentTransaction.commit();
+    private void signInWithFireBase() {
+        String email = binding.etLoginEmail.getText().toString();
+        String password = binding.etLoginPassword.getText().toString();
+        if (checkInput(email, password)) {
+            binding.pbLoginProcess.setVisibility(View.VISIBLE);
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            binding.pbLoginProcess.setVisibility(View.INVISIBLE);
+        }
     }
 
+    private void signInWithGoogle() {
+        Intent intent = gsc.getSignInIntent();
+        startActivityForResult(intent, 20);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        binding.pbLoginProcess.setVisibility(View.VISIBLE);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 20) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                var idToken = account.getIdToken();
+                AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                    User user = new User(firebaseUser.getUid(), firebaseUser.getDisplayName(), firebaseUser.getEmail(), "google");
+                                    userRepo.createUser(user);
+                                    Intent intent = new Intent(requireActivity(), MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getContext(), task.getException().getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            } catch (ApiException e) {
+                Toast.makeText(getContext(), "Đăng nhập vs google thất bại!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        binding.pbLoginProcess.setVisibility(View.INVISIBLE);
+    }
 
 }
