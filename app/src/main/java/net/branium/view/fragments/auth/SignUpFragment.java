@@ -2,21 +2,17 @@ package net.branium.view.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -24,14 +20,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
+import net.branium.databinding.FragmentSignUpBinding;
 import net.branium.model.User;
-import net.branium.repository.SongRepository;
 import net.branium.repository.UserRepository;
 import net.branium.view.activities.MainActivity;
 
@@ -39,243 +36,133 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SignUpFragment extends Fragment {
-    TextView tvAlreadyHaveAccount;
-    FrameLayout frmLayoutAuth;
-    EditText etRegisterUserName;
-    EditText etRegisterEmail;
-    EditText etRegisterPassword;
-    EditText etRegisterRePassword;
-    MaterialButton mtBtnConfirmRegister;
-    ProgressBar pbRegisterProcess;
-    ImageView ivRegisterShowPwd;
-    ImageView ivRegisterShowRePwd;
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
+public class SignUpFragment extends Fragment implements View.OnClickListener {
+    private User user = new User();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private UserRepository userRepo = new UserRepository();
+    private FragmentSignUpBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        tvAlreadyHaveAccount = view.findViewById(R.id.tv_already_have_account);
-        frmLayoutAuth = requireActivity().findViewById(R.id.frm_layout_auth);
-
-        etRegisterUserName = view.findViewById(R.id.et_register_username);
-        etRegisterEmail = view.findViewById(R.id.et_register_email);
-        etRegisterPassword = view.findViewById(R.id.et_register_password);
-        etRegisterRePassword = view.findViewById(R.id.et_register_re_password);
-        mtBtnConfirmRegister = view.findViewById(R.id.mt_btn_confirm_register);
-        pbRegisterProcess = view.findViewById(R.id.pb_register_process);
-        ivRegisterShowPwd = view.findViewById(R.id.iv_register_show_pwd);
-        ivRegisterShowRePwd = view.findViewById(R.id.iv_register_show_re_pwd);
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false);
+        binding.setUser(user);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Xử lý sự kiện khi nhấn đã có mật khẩu
-        tvAlreadyHaveAccount.setOnClickListener(v -> setFragment(new SignInFragment()));
-
-        etRegisterUserName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        etRegisterEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        etRegisterPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        etRegisterRePassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkInputs();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        mtBtnConfirmRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUpWithFireBase();
-                mtBtnConfirmRegister.setEnabled(false);
-                mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
-                mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
-            }
-        });
-
-        ivRegisterShowPwd.setOnClickListener(v -> {
-            if (etRegisterPassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
-                etRegisterPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                ivRegisterShowPwd.setImageResource(R.drawable.ic_hidden_pwd_24);
-            } else {
-                etRegisterPassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
-                ivRegisterShowPwd.setImageResource(R.drawable.ic_show_pwd_24);
-            }
-        });
-
-        ivRegisterShowRePwd.setOnClickListener(v -> {
-            if (etRegisterRePassword.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
-                etRegisterRePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                ivRegisterShowRePwd.setImageResource(R.drawable.ic_hidden_pwd_24);
-            } else {
-                etRegisterRePassword.setTransformationMethod(PasswordMaskTransformation.getInstance());
-                ivRegisterShowRePwd.setImageResource(R.drawable.ic_show_pwd_24);
-            }
-        });
-
-
+        registerClickEvent();
     }
 
-    private void signUpWithFireBase() {
-        String username = etRegisterUserName.getText().toString();
-        String email = etRegisterEmail.getText().toString();
-        String password = etRegisterPassword.getText().toString();
-        String rePassword = etRegisterRePassword.getText().toString();
-        if (email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
-            if (password.equals(rePassword)) {
-                pbRegisterProcess.setVisibility(View.VISIBLE);
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                pbRegisterProcess.setVisibility(View.INVISIBLE);
-                                if (task.isSuccessful()) {
-                                    Map<String, Object> userMap = new HashMap<>();
-                                    userMap.put("username", username);
-                                    userMap.put("email", email);
-                                    db.collection("users")
-                                            .document(task.getResult().getUser().getUid())
-                                            .set(userMap)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                                    final User newUser = new User(mAuth.getUid(), username, email, password);
-                                                    new UserRepository().createUser(newUser);
-                                                    startActivity(intent);
-                                                    getActivity().finish();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getActivity(), e.getMessage(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    mtBtnConfirmRegister.setEnabled(true);
-                                                    mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-                                                    mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
-                                                }
-                                            });
-                                } else {
-                                    Toast.makeText(getActivity(), task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                    mtBtnConfirmRegister.setEnabled(true);
-                                    mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-                                    mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
-                                }
-                            }
-                        });
-            } else {
-                etRegisterRePassword.setError("Xác nhân mật khẩu không khớp!");
-                mtBtnConfirmRegister.setEnabled(true);
-                mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-                mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
-            }
-        } else {
-            etRegisterEmail.setError("Email sai định dạng!");
-            mtBtnConfirmRegister.setEnabled(true);
-            mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-            mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
+    @Override
+    public void onClick(View v) {
+        var id = v.getId();
+        if (binding.tvAlreadyHaveAccount.getId() == id) {
+            setFragment(new SignInFragment());
+        } else if (binding.ivRegisterShowPwd.getId() == id) {
+            togglePasswordMask(binding.etRegisterPassword, binding.ivRegisterShowPwd);
+        } else if (binding.ivRegisterShowRePwd.getId() == id) {
+            togglePasswordMask(binding.etRegisterRePassword, binding.ivRegisterShowRePwd);
+        } else if (binding.mtBtnConfirmRegister.getId() == id) {
+            signUpWithFireBase();
         }
     }
+    private void togglePasswordMask(EditText password, ImageView toggle) {
+        if (password.getTransformationMethod().equals(PasswordMaskTransformation.getInstance())) {
+            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            toggle.setImageResource(R.drawable.ic_hidden_pwd_24);
+        } else {
+            password.setTransformationMethod(PasswordMaskTransformation.getInstance());
+            toggle.setImageResource(R.drawable.ic_show_pwd_24);
+        }
+    }
+    private void signUpWithFireBase() {
+        String username = user.getUsername();
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String rePassword = binding.etRegisterRePassword.getText().toString();
+        if (checkInputs(username, email, password, rePassword)) {
+            binding.pbRegisterProcess.setVisibility(View.VISIBLE);
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(username)
+                                .build();
+                        firebaseUser.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            user.setId(firebaseUser.getUid());
+                                            userRepo.createUser(user); // save to postgres
+                                            Intent intent = new Intent(requireActivity(), MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(getActivity(), task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+    private boolean checkInputs(String username, String email, String password, String rePassword) {
+        boolean valid = true;
+        if ( username == null || username.isBlank() || username.isEmpty()) {
+            binding.etRegisterUsername.setError("Tên đăng nhập không được để trống!");
+            valid = false;
+        }
 
+        if (email == null || email.isBlank() || email.isEmpty()) {
+            binding.etRegisterEmail.setError("Email không được để trống!");
+            valid = false;
+        }
+
+        if (email != null && !email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+            binding.etRegisterEmail.setError("Email không đúng định dạng!");
+            valid = false;
+        }
+
+        if (password == null || password.isBlank() || password.isEmpty()) {
+            binding.etRegisterPassword.setError("Mật khẩu không được để trống!");
+            valid = false;
+        }
+
+        if (password != null && password.length() < 6) {
+            binding.etRegisterPassword.setError("Độ dài mật khẩu tối thiểu 6 kí tự!");
+            valid = false;
+        }
+
+        if (rePassword == null || rePassword.isBlank() || rePassword.isEmpty()) {
+            binding.etRegisterRePassword.setError("Mật khẩu xác nhận không được để trống!");
+            valid = false;
+        }
+
+        if (password != null && rePassword != null && !rePassword.equals(password)) {
+            binding.etRegisterRePassword.setError("Mật khẩu xác nhận không trùng khớp!");
+            valid = false;
+        }
+
+        return valid;
+    }
+    private void registerClickEvent() {
+        binding.tvAlreadyHaveAccount.setOnClickListener(this);
+        binding.ivRegisterShowPwd.setOnClickListener(this);
+        binding.ivRegisterShowRePwd.setOnClickListener(this);
+        binding.mtBtnConfirmRegister.setOnClickListener(this);
+    }
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.from_left, R.anim.out_from_right);
-        fragmentTransaction.replace(frmLayoutAuth.getId(), fragment);
+        fragmentTransaction.replace(requireActivity().findViewById(R.id.frm_layout_auth).getId(), fragment);
         fragmentTransaction.commit();
     }
 
-    private void checkInputs() {
-        if (!etRegisterUserName.getText().toString().isEmpty()) {
-            if (!etRegisterEmail.getText().toString().isEmpty()) {
-                if (!etRegisterPassword.getText().toString().isEmpty() && etRegisterPassword.getText().length() >= 6) {
-                    if (!etRegisterRePassword.getText().toString().isEmpty()) {
-                        mtBtnConfirmRegister.setEnabled(true);
-                        mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.medium_green));
-                        mtBtnConfirmRegister.setStrokeColorResource(R.color.medium_green);
-                    } else {
-                        mtBtnConfirmRegister.setEnabled(false);
-                        mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
-                        mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
-                    }
-                } else {
-                    mtBtnConfirmRegister.setEnabled(false);
-                    mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
-                    mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
-                }
-            } else {
-                mtBtnConfirmRegister.setEnabled(false);
-                mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
-                mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
-            }
-        } else {
-            mtBtnConfirmRegister.setEnabled(false);
-            mtBtnConfirmRegister.setBackgroundColor(getResources().getColor(R.color.very_light_green));
-            mtBtnConfirmRegister.setStrokeColorResource(R.color.very_light_green);
-        }
-    }
 }

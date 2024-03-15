@@ -92,8 +92,7 @@
             android:layout_marginEnd="20dp"
             android:width="340dp"
             android:height="44dp"
-            android:backgroundTint="@color/very_light_green"
-            android:enabled="false"
+            android:backgroundTint="@color/medium_green"
             android:fontFamily="@font/inter_semibold"
             android:text="@string/txt_mt_btn_register"
             android:textColor="@color/white"
@@ -101,7 +100,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pb_register_process"
-            app:strokeColor="@color/very_light_green"
+            app:strokeColor="@color/medium_green"
             app:strokeWidth="1dp" />
 
         <EditText
@@ -150,7 +149,6 @@
             tools:ignore="DuplicateSpeakableTextCheck,TextFields" />
 
         <EditText
-
             android:id="@+id/et_register_re_password"
             android:layout_width="0dp"
             android:layout_height="40dp"
