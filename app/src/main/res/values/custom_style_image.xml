@@ -4,7 +4,7 @@
         <item name="cornerSize">50%</item>
     </style>
     <style name="rounded_music_photo">
-        <item name="cornerSize">10%</item>
+        <item name="cornerSize">5%</item>
     </style>
     <style name="home_rounded_music_photo">
         <item name="cornerSizeTopLeft">5%</item>

@@ -6,11 +6,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
+    private static final String PATH = Constants.MACOS_FULL_PATH_BACKEND;
     private static Retrofit retrofit = null;
 
     public static SongAPIService getSongAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .baseUrl(PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -19,7 +20,7 @@ public class RetrofitInstance {
 
     public static AlbumAPIService getAlbumAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .baseUrl(PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(AlbumAPIService.class);
@@ -27,7 +28,7 @@ public class RetrofitInstance {
 
     public static UserAPIService getUserAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .baseUrl(PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(UserAPIService.class);
@@ -35,7 +36,7 @@ public class RetrofitInstance {
 
     public static PlaylistAPIService getPlaylistAPIService() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.EMULATOR_FULL_PATH)
+                .baseUrl(PATH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(PlaylistAPIService.class);
