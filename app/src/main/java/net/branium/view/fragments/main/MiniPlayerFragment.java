@@ -30,7 +30,7 @@ import net.branium.service.MusicService;
 
 import java.io.IOException;
 
-public class MiniPlayerFragment extends Fragment implements ServiceConnection {
+public class MiniPlayerFragment extends Fragment {
     ImageView nextBtn;
     ImageView albumArtImage;
     TextView artist;
@@ -89,20 +89,20 @@ public class MiniPlayerFragment extends Fragment implements ServiceConnection {
                                 SONG_NAME_TO_FRAG = null;
                             }
                             if(SHOW_MINI_PLAYER) {
-                                if(PATH_TO_FRAG != null) {
-                                    try {
-                                        byte[] art = getMusicPhoto(PATH_TO_FRAG);
-                                        if(art != null) {
-                                            Glide.with(requireContext()).load(art).into(albumArtImage);
-                                        }else {
-                                            Glide.with(requireContext()).load(R.drawable.logo_image).into(albumArtImage);
-                                        }
-                                        songName.setText(SONG_NAME_TO_FRAG);
-                                        artist.setText(ARTIST_TO_FRAG);
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }
+//                                if(PATH_TO_FRAG != null) {
+//                                    try {
+//                                        byte[] art = getMusicPhoto(PATH_TO_FRAG);
+//                                        if(art != null) {
+//                                            Glide.with(requireContext()).load(art).into(albumArtImage);
+//                                        }else {
+//                                            Glide.with(requireContext()).load(R.drawable.logo_image).into(albumArtImage);
+//                                        }
+//                                        songName.setText(SONG_NAME_TO_FRAG);
+//                                        artist.setText(ARTIST_TO_FRAG);
+//                                    } catch (IOException e) {
+//                                        throw new RuntimeException(e);
+//                                    }
+//                                }
                             }
                         }
                     } catch (IOException e) {
@@ -133,59 +133,59 @@ public class MiniPlayerFragment extends Fragment implements ServiceConnection {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(SHOW_MINI_PLAYER) {
-            if(PATH_TO_FRAG != null) {
-                try {
-                    byte[] art = getMusicPhoto(PATH_TO_FRAG);
-                    if(art != null) {
-                        Glide.with(getContext()).load(art).into(albumArtImage);
-                    }else {
-                        Glide.with(getContext()).load(R.drawable.logo_image).into(albumArtImage);
-                    }
-                    songName.setText(SONG_NAME_TO_FRAG);
-                    artist.setText(ARTIST_TO_FRAG);
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if(SHOW_MINI_PLAYER) {
+//            if(PATH_TO_FRAG != null) {
+//                try {
+//                    byte[] art = getMusicPhoto(PATH_TO_FRAG);
+//                    if(art != null) {
+//                        Glide.with(getContext()).load(art).into(albumArtImage);
+//                    }else {
+//                        Glide.with(getContext()).load(R.drawable.logo_image).into(albumArtImage);
+//                    }
+//                    songName.setText(SONG_NAME_TO_FRAG);
+//                    artist.setText(ARTIST_TO_FRAG);
+//
+//                    Intent intent = new Intent(getContext(), MusicService.class);
+//                    if(getContext() != null) {
+//                        getContext().bindService(intent, this, BIND_AUTO_CREATE);
+//                    }
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }
+//    }
 
-                    Intent intent = new Intent(getContext(), MusicService.class);
-                    if(getContext() != null) {
-                        getContext().bindService(intent, this, BIND_AUTO_CREATE);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(getContext() != null) {
-            getContext().unbindService(this);
-        }
-//        if (musicService != null && getContext() != null) {
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if(getContext() != null) {
 //            getContext().unbindService(this);
 //        }
-    }
-
-    private byte[] getMusicPhoto(String uri) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] photo = retriever.getEmbeddedPicture();
-        retriever.release();
-        return photo;
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-        MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
-        musicService = myBinder.getService();
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        musicService = null;
-    }
+////        if (musicService != null && getContext() != null) {
+////            getContext().unbindService(this);
+////        }
+//    }
+//
+//    private byte[] getMusicPhoto(String uri) throws IOException {
+//        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+//        retriever.setDataSource(uri);
+//        byte[] photo = retriever.getEmbeddedPicture();
+//        retriever.release();
+//        return photo;
+//    }
+//
+//    @Override
+//    public void onServiceConnected(ComponentName name, IBinder service) {
+//        MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
+//        musicService = myBinder.getService();
+//    }
+//
+//    @Override
+//    public void onServiceDisconnected(ComponentName name) {
+//        musicService = null;
+//    }
 }

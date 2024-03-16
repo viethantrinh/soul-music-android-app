@@ -7,144 +7,86 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import net.branium.R;
+import net.branium.databinding.FragmentUserBinding;
+import net.branium.model.Playlist;
+import net.branium.repository.PlaylistRepository;
+import net.branium.repository.UserRepository;
+import net.branium.utils.Constants;
 import net.branium.view.activities.AuthActivity;
+import net.branium.view.adapters.HomeLovePlaylistAdapter;
+import net.branium.viewmodel.HomeFragmentViewModel;
 
-public class UserFragment extends Fragment {
-    String userUID;
-    MaterialButton mt_btn_delete_account;
-    MaterialButton mt_btn_logout;
-    MaterialButton mt_btn_update_account;
-    TextView tv_username_account;
-    TextView tv_email_account;
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    DocumentReference userRef;
-    FirebaseUser firebaseUser;
+import java.util.List;
+
+public class UserFragment extends Fragment implements View.OnClickListener {
+    private UserRepository userRepo = new UserRepository();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FragmentUserBinding binding;
+    private HomeLovePlaylistAdapter homeLovePlaylistAdapter;
+    private HomeFragmentViewModel homeFragmentViewModel;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
-
-        mt_btn_logout = view.findViewById(R.id.mt_btn_logout);
-        mt_btn_delete_account = view.findViewById(R.id.mt_btn_delete_account);
-        mt_btn_update_account = view.findViewById(R.id.mt_btn_update_account);
-        tv_email_account = view.findViewById(R.id.tv_email_account);
-        tv_username_account = view.findViewById(R.id.tv_username_account);
-
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
-        userUID = mAuth.getCurrentUser().getUid();
-        userRef = db.collection("users").document(userUID);
-
-//        ConstraintLayout constraintLayout = view.findViewById(R.id.fragment_user_container);
-//        constraintLayout.setMaxHeight(100);
-
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false);
+        binding.tvUsernameAccount.setText(mAuth.getCurrentUser().getDisplayName());
+        binding.tvEmailAccount.setText(mAuth.getCurrentUser().getEmail());
+        registerEventListener();
+        getUserLovePlaylist();
+        return binding.getRoot();
     }
+
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        GetUserByUID();
-
-        mt_btn_update_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), UserUpdateActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mt_btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConfirmationDialog("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất?", "Đăng xuất", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogoutAccount();
-                    }
-                });
-            }
-        });
-
-        mt_btn_delete_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConfirmationDialog("Xác nhận xóa", "Bạn có chắc chắn muốn xóa?", "Xóa", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeleteUserAccount();
-                    }
-                });
-            }
-        });
-    }
-
-    private void loadFragment(Fragment fragment) {
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.body_container, fragment);
-        transaction.commit();
-    }
-
-    private void GetUserByUID() {
-        db.collection("users").document(userUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    tv_username_account.setText(documentSnapshot.getString("username"));
-                    tv_email_account.setText(documentSnapshot.getString("email"));
+    public void onClick(View v) {
+        var id = v.getId();
+        if (binding.mtBtnUpdateAccount.getId() == id) {
+            Intent intent = new Intent(getActivity(), UserUpdateActivity.class);
+            startActivityForResult(intent, 0);
+        } else if (binding.mtBtnLogout.getId() == id) {
+            showConfirmationDialog("Đăng xuất", "Bạn có chắc chắn muốn đăng xuất?", "Đăng xuất", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    logoutAccount();
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        } else if (binding.mtBtnDeleteAccount.getId() == id) {
+            showConfirmationDialog("Xác nhận xóa", "Bạn có chắc chắn muốn xóa?", "Xóa", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteUserAccount();
+                }
+            });
+        }
     }
 
-    private void DeleteUserAccount() {
-        // xóa trong firebase
-        userRef.delete();
-
-        // xóa trong authentication
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private void deleteUserAccount() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        // Xóa thành công
                         Toast.makeText(getContext(), "Xóa tài khoản thành công", Toast.LENGTH_SHORT).show();
-
-                        // Chuyển đến màn hình đăng nhập hoặc màn hình khác nếu cần
-                        Intent intent = new Intent(getContext(), AuthActivity.class);
+                        userRepo.deleteUser(firebaseUser.getUid());
+                        Intent intent = new Intent(requireActivity(), AuthActivity.class);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "Lỗi: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -154,18 +96,24 @@ public class UserFragment extends Fragment {
         }
     }
 
-    private void LogoutAccount() {
+    private void logoutAccount() {
         mAuth.signOut();
         Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getContext(), AuthActivity.class);
+        Intent intent = new Intent(requireActivity(), AuthActivity.class);
         startActivity(intent);
+    }
+
+
+    private void registerEventListener() {
+        binding.mtBtnUpdateAccount.setOnClickListener(this);
+        binding.mtBtnLogout.setOnClickListener(this);
+        binding.mtBtnDeleteAccount.setOnClickListener(this);
     }
 
     private void showConfirmationDialog(String title, String message, String button, DialogInterface.OnClickListener positiveClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(title);
         builder.setMessage(message);
-
         // Thiết lập nút xác nhận và màu sắc cho nó
         builder.setPositiveButton(button, positiveClickListener);
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -174,11 +122,31 @@ public class UserFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
         // Tạo và hiển thị AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            binding.tvUsernameAccount.setText("" + mAuth.getCurrentUser().getDisplayName());
+        }
+    }
 
+    private void getUserLovePlaylist() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = firebaseUser.getUid();
+        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        homeFragmentViewModel.getAllUserPlaylist(currentUserId).observe(requireActivity(), new Observer<List<Playlist>>() {
+            @Override
+            public void onChanged(List<Playlist> playlists) {
+                homeLovePlaylistAdapter = new HomeLovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
+                binding.recyclerViewUserLovePlaylistInUserFrag.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+                binding.recyclerViewUserLovePlaylistInUserFrag.setAdapter(homeLovePlaylistAdapter);
+                homeLovePlaylistAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 }

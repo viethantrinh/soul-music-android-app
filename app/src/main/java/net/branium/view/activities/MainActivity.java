@@ -25,7 +25,7 @@ import net.branium.view.fragments.main.UserFragment;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ServiceConnection {
+public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     public static ViewPager2 viewPagerMain;
     ViewPagerAdapter viewPagerAdapter;
@@ -98,34 +98,34 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences preferences = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE);
-        String path = preferences.getString(MUSIC_FILE, null);
-        String artist = preferences.getString(ARTIST_NAME, null);
-        String songName = preferences.getString(SONG_NAME, null);
-        if(path != null) {
-            SHOW_MINI_PLAYER = true;
-            PATH_TO_FRAG = path;
-            ARTIST_TO_FRAG = artist;
-            SONG_NAME_TO_FRAG = songName;
-        }else {
-            SHOW_MINI_PLAYER = false;
-            PATH_TO_FRAG = null;
-            ARTIST_TO_FRAG = null;
-            SONG_NAME_TO_FRAG = null;
-        }
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-        MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
-        musicService = myBinder.getService();
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        musicService = null;
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        SharedPreferences preferences = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE);
+//        String path = preferences.getString(MUSIC_FILE, null);
+//        String artist = preferences.getString(ARTIST_NAME, null);
+//        String songName = preferences.getString(SONG_NAME, null);
+//        if(path != null) {
+//            SHOW_MINI_PLAYER = true;
+//            PATH_TO_FRAG = path;
+//            ARTIST_TO_FRAG = artist;
+//            SONG_NAME_TO_FRAG = songName;
+//        }else {
+//            SHOW_MINI_PLAYER = false;
+//            PATH_TO_FRAG = null;
+//            ARTIST_TO_FRAG = null;
+//            SONG_NAME_TO_FRAG = null;
+//        }
+//    }
+//
+//    @Override
+//    public void onServiceConnected(ComponentName name, IBinder service) {
+//        MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
+//        musicService = myBinder.getService();
+//    }
+//
+//    @Override
+//    public void onServiceDisconnected(ComponentName name) {
+//        musicService = null;
+//    }
 }
