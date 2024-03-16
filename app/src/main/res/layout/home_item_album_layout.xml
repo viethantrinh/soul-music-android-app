@@ -31,6 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/home_rounded_album_photo"
+                android:scaleType="centerCrop"
                 bind:image="@{album.image}" />
 
             <TextView

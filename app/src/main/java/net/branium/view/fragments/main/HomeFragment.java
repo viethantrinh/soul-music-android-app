@@ -1,6 +1,6 @@
 package net.branium.view.fragments.main;
 
-import static net.branium.view.activities.MainActivity.viewPagerMain;
+import static net.branium.view.activities.MainActivity.getViewPagerMain;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -104,14 +103,14 @@ public class HomeFragment extends Fragment {
                     case MotionEvent.ACTION_MOVE:
                         boolean isScrollingRight = e.getX() < lastX;
                         if ((isScrollingRight && ((LinearLayoutManager) binding.homeRecycleViewListAlbum.getLayoutManager()).findLastCompletelyVisibleItemPosition() == binding.homeRecycleViewListAlbum.getAdapter().getItemCount() - 1) || (!isScrollingRight && ((LinearLayoutManager) binding.homeRecycleViewListAlbum.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)) {
-                            viewPagerMain.setUserInputEnabled(true);
+                            getViewPagerMain().setUserInputEnabled(true);
                         } else {
-                            viewPagerMain.setUserInputEnabled(false);
+                            getViewPagerMain().setUserInputEnabled(false);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
                         lastX = 0;
-                        viewPagerMain.setUserInputEnabled(true);
+                        getViewPagerMain().setUserInputEnabled(true);
                         break;
                 }
                 return false;

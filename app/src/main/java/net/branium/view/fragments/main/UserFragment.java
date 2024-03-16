@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import net.branium.R;
 import net.branium.databinding.FragmentUserBinding;
 import net.branium.model.Playlist;
-import net.branium.repository.PlaylistRepository;
 import net.branium.repository.UserRepository;
 import net.branium.utils.Constants;
 import net.branium.view.activities.AuthActivity;

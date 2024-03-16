@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="custom_toolbar_title_style" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">36sp</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+</resources>

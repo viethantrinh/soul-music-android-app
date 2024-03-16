@@ -1,8 +1,6 @@
 package net.branium.view.fragments.main;
 
 
-import static net.branium.view.activities.SplashActivity.musicFiles;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,56 +12,56 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import net.branium.R;
+import net.branium.databinding.FragmentPlaylistBinding;
 import net.branium.model.Song;
-import net.branium.view.activities.SplashActivity;
+import net.branium.utils.Constants;
 import net.branium.view.adapters.PlaylistMusicAdapter;
+import net.branium.viewmodel.HomeFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class PlaylistFragment extends Fragment implements SearchView.OnQueryTextListener {
-    RecyclerView recyclerView;
-    PlaylistMusicAdapter playlistMusicAdapter;
-    List<Song> songLists = new ArrayList<>();
-    public static String MY_SORT_PREF = "SortOrder";
+    private HomeFragmentViewModel homeFragmentViewModel;
+    private PlaylistMusicAdapter playlistMusicAdapter;
+    private FragmentPlaylistBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_playlist, container, false);
-
-        // Thiết lập Toolbar
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_playlist, container, false);
+        // Config toolbar
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
-        activity.setSupportActionBar(toolbar);
-
+        activity.setSupportActionBar(binding.toolbar);
         // Báo cho Fragment biết rằng nó sẽ có menu của riêng mình
         setHasOptionsMenu(true);
-
-        recyclerView = view.findViewById(R.id.recycler_view_playlist);
-        recyclerView.setHasFixedSize(true);
-
         // Đăng ký RecyclerView cho ContextMenu
-        registerForContextMenu(recyclerView);
-
-
-        songLists = SplashActivity.musicFiles;
-
-        if (!(musicFiles.size() < 1)) {
-            playlistMusicAdapter = new PlaylistMusicAdapter(getContext(), musicFiles);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            recyclerView.setAdapter(playlistMusicAdapter);
-        }
-        return view;
+        registerForContextMenu(binding.recyclerViewPlaylist);
+        getSongList();
+        return binding.getRoot();
     }
+
+    private void getSongList() {
+        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        homeFragmentViewModel.getAllSongs().observe(requireActivity(), new Observer<List<Song>>() {
+            @Override
+            public void onChanged(List<Song> songListFromLiveData) {
+                playlistMusicAdapter = new PlaylistMusicAdapter(requireContext(), Constants.SONG_LIST);
+                binding.recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false));
+                binding.recyclerViewPlaylist.setAdapter(playlistMusicAdapter);
+                playlistMusicAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.search, menu);
@@ -82,8 +80,8 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : songLists) {
-            if(song.getTitle().toLowerCase().contains(userInput)) {
+        for (Song song : Constants.SONG_LIST) {
+            if (song.getTitle().toLowerCase().contains(userInput)) {
                 songs.add(song);
             }
         }
@@ -94,14 +92,14 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.by_name_list) {
-            songLists.sort(Comparator.comparing(Song::getTitle));
+            Constants.SONG_LIST.sort(Comparator.comparing(Song::getTitle));
             playlistMusicAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.by_artist_list) {
-            songLists.sort(Comparator.comparing(Song::getArtist));
+            Constants.SONG_LIST.sort(Comparator.comparing(Song::getArtist));
             playlistMusicAdapter.notifyDataSetChanged();
-        }else if (item.getItemId() == R.id.by_duration_list) {
-//            songLists.sort(Comparator.comparing(Song::getDuration));
-//            playlistMusicAdapter.notifyDataSetChanged();
+        } else if (item.getItemId() == R.id.by_duration_list) {
+            Constants.SONG_LIST.sort(Comparator.comparing(Song::getDuration));
+            playlistMusicAdapter.notifyDataSetChanged();
         }
         return true;
     }
