@@ -54,7 +54,7 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
         homeFragmentViewModel.getAllSongs().observe(requireActivity(), new Observer<List<Song>>() {
             @Override
             public void onChanged(List<Song> songListFromLiveData) {
-                playlistMusicAdapter = new PlaylistMusicAdapter(requireContext(), Constants.SONG_LIST);
+                playlistMusicAdapter = new PlaylistMusicAdapter(requireContext(), Constants.PLAYLIST_SONG_LIST);
                 binding.recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false));
                 binding.recyclerViewPlaylist.setAdapter(playlistMusicAdapter);
                 playlistMusicAdapter.notifyDataSetChanged();
@@ -80,7 +80,7 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Constants.SONG_LIST) {
+        for (Song song : Constants.PLAYLIST_SONG_LIST) {
             if (song.getTitle().toLowerCase().contains(userInput)) {
                 songs.add(song);
             }
@@ -92,13 +92,13 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.by_name_list) {
-            Constants.SONG_LIST.sort(Comparator.comparing(Song::getTitle));
+            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getTitle));
             playlistMusicAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.by_artist_list) {
-            Constants.SONG_LIST.sort(Comparator.comparing(Song::getArtist));
+            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getArtist));
             playlistMusicAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.by_duration_list) {
-            Constants.SONG_LIST.sort(Comparator.comparing(Song::getDuration));
+            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getDuration));
             playlistMusicAdapter.notifyDataSetChanged();
         }
         return true;

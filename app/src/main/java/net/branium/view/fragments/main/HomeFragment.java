@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         homeFragmentViewModel.getAllSongs().observe(requireActivity(), new Observer<List<Song>>() {
             @Override
             public void onChanged(List<Song> songList) {
-                homeMusicAdapter = new HomeMusicAdapter(Constants.SONG_LIST, requireContext());
+                homeMusicAdapter = new HomeMusicAdapter(Constants.HOME_SONG_LIST, requireContext());
                 binding.homeRecycleViewListSong.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
                 binding.homeRecycleViewListSong.setAdapter(homeMusicAdapter);
                 homeMusicAdapter.notifyDataSetChanged();

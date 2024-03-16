@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_image" />
+            app:srcCompat="@drawable/img_logo" />
 
         <TextView
             android:id="@+id/textView"
@@ -188,7 +188,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mt_btn_register"
-            app:srcCompat="@drawable/login_option_image" />
+            app:srcCompat="@drawable/img_login_option" />
 
         <ProgressBar
             android:id="@+id/pb_login_process"

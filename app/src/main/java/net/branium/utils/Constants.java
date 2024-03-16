@@ -23,7 +23,8 @@ public class Constants {
 
 
     // static data for home fragment
-    public static final List<Song> SONG_LIST = new ArrayList<>();
+    public static final List<Song> HOME_SONG_LIST = new ArrayList<>();
+    public static final List<Song> PLAYLIST_SONG_LIST = new ArrayList<>();
     public static final List<Album> ALBUM_LIST = new ArrayList<>();
     public static final List<Playlist> USER_PLAYLIST_LIST = new ArrayList<>();
 

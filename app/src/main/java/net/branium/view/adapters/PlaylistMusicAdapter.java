@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PlaylistMusicAdapter extends RecyclerView.Adapter<PlaylistMusicAdapter.MusicViewHolder> {
     private Context context;
-    public List<Song> songList;
+    private List<Song> songList;
 
 
     public PlaylistMusicAdapter(Context context, List<Song> songList) {
