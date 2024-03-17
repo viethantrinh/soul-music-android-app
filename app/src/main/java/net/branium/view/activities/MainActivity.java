@@ -6,6 +6,9 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -13,9 +16,11 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
 import net.branium.databinding.ActivityMainBinding;
+import net.branium.utils.Constants;
 import net.branium.view.adapters.ViewPagerAdapter;
 import net.branium.view.fragments.main.HomeFragment;
 import net.branium.view.fragments.main.LoveFragment;
+import net.branium.view.fragments.main.MiniPlayerFragment;
 import net.branium.view.fragments.main.PlaylistFragment;
 import net.branium.view.fragments.main.RankFragment;
 import net.branium.view.fragments.main.UserFragment;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private ActivityMainBinding binding;
     private static ViewPager2 viewPagerMain;
+    public static Fragment miniPlayerFragment = new MiniPlayerFragment();
 
 
     @Override
@@ -90,6 +96,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Constants.MINI_PLAYER_ACTIVE) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(binding.fragBottomPlayer.getId(), miniPlayerFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     public static ViewPager2 getViewPagerMain() {

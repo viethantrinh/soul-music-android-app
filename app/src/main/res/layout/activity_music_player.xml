@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_background"
-        tools:context=".view.activities.MusicPlayerActivity">
+        tools:context=".view.activities.MusicActivity">
 
         <TextView
             android:id="@+id/textView7"
@@ -81,11 +81,12 @@
             android:id="@+id/tv_music_player_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/inter"
+            android:maxLength="30"
             android:text="RPT MCK (ft. Trung Trần)"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:maxLength="30"
             app:layout_constraintEnd_toEndOf="@+id/tv_music_player_title"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_music_player_title"

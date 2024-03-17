@@ -18,7 +18,7 @@
             android:name=".view.fragments.main.UserUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.MusicPlayerActivity"
+            android:name=".view.activities.MusicActivity"
             android:exported="false" />
         <activity
             android:name=".view.activities.AuthActivity"

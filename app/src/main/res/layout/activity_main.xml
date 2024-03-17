@@ -32,12 +32,12 @@
             app:layout_constraintBottom_toBottomOf="@+id/view_pager_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
-            <fragment
-                android:name="net.branium.view.fragments.main.MiniPlayerFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_mini_player" />
+<!--            <fragment-->
+<!--                android:id="@+id/fragment_mini_player"-->
+<!--                android:name="net.branium.view.fragments.main.MiniPlayerFragment"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                tools:layout="@layout/fragment_mini_player" />-->
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

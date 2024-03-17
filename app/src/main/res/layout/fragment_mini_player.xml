@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:backgroundTint="@color/black"
-    app:cardCornerRadius="18dp"
-    tools:context=".view.fragments.main.MiniPlayerFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="18dp"
+        tools:context=".view.fragments.main.MiniPlayerFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_mini_album_art"
-            android:layout_width="60dp"
-            android:layout_height="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/mini_player_rounded_music_photo" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_mini_skip_next_bottom"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_skip_next_24"
-            app:layout_constraintBottom_toBottomOf="@+id/fab_play_pause_mini_player"
-            app:layout_constraintStart_toEndOf="@+id/fab_play_pause_mini_player"
-            app:layout_constraintTop_toTopOf="@+id/fab_play_pause_mini_player" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_mini_album_art"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/mini_player_rounded_music_photo" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_play_pause_mini_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toStartOf="@id/iv_mini_skip_next_bottom"
-            android:backgroundTint="@color/medium_green"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_play_24"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/circular" />
+            <ImageView
+                android:id="@+id/iv_mini_skip_next_button"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_skip_next_24"
+                app:layout_constraintBottom_toBottomOf="@+id/fab_play_pause_mini_player"
+                app:layout_constraintStart_toEndOf="@+id/fab_play_pause_mini_player"
+                app:layout_constraintTop_toTopOf="@+id/fab_play_pause_mini_player" />
 
-        <TextView
-            android:id="@+id/tv_song_name_mini_player"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_toStartOf="@id/fab_play_pause_mini_player"
-            android:layout_toEndOf="@id/iv_mini_album_art"
-            android:fontFamily="@font/inter_semibold"
-            android:maxLines="1"
-            android:text="Song Name Is Here"
-            android:textColor="#FFF"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_mini_album_art"
-            app:layout_constraintEnd_toStartOf="@+id/fab_play_pause_mini_player"
-            app:layout_constraintStart_toEndOf="@+id/iv_mini_album_art"
-            app:layout_constraintTop_toTopOf="@+id/iv_mini_album_art"
-            app:layout_constraintVertical_bias="0.0" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_play_pause_mini_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="4dp"
+                android:layout_toStartOf="@id/iv_mini_skip_next_button"
+                android:backgroundTint="@color/medium_green"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_play_24"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/circular" />
 
-        <TextView
-            android:id="@+id/tv_song_artist_mini_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_song_name_mini_player"
-            android:layout_marginTop="5dp"
-            android:layout_toStartOf="@id/fab_play_pause_mini_player"
-            android:layout_toEndOf="@id/iv_mini_album_art"
-            android:maxLines="1"
-            android:text="Artist Name"
-            android:fontFamily="@font/inter_medium"
-            android:textColor="#FFF"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_song_name_mini_player"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_song_name_mini_player"
-            app:layout_constraintTop_toBottomOf="@+id/tv_song_name_mini_player" />
+            <TextView
+                android:id="@+id/tv_song_name_mini_player"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@id/fab_play_pause_mini_player"
+                android:layout_toEndOf="@id/iv_mini_album_art"
+                android:fontFamily="@font/inter_semibold"
+                android:maxLines="1"
+                android:text="Song Name Is Here"
+                android:textColor="#FFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_mini_album_art"
+                app:layout_constraintEnd_toStartOf="@+id/fab_play_pause_mini_player"
+                app:layout_constraintStart_toEndOf="@+id/iv_mini_album_art"
+                app:layout_constraintTop_toTopOf="@+id/iv_mini_album_art"
+                app:layout_constraintVertical_bias="0.0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tv_song_artist_mini_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_song_name_mini_player"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@id/fab_play_pause_mini_player"
+                android:layout_toEndOf="@id/iv_mini_album_art"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="1"
+                android:text="Artist Name"
+                android:textColor="#FFF"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_song_name_mini_player"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_song_name_mini_player"
+                app:layout_constraintTop_toBottomOf="@+id/tv_song_name_mini_player" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
-    private static final String PATH = Constants.MACOS_FULL_PATH_BACKEND;
+    private static final String PATH = Constants.WINDOW_FULL_PATH_BACKEND;
     private static Retrofit retrofit = null;
 
     public static SongAPIService getSongAPIService() {

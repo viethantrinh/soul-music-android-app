@@ -1,5 +1,6 @@
 package net.branium.view.activities;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import net.branium.R;
 import net.branium.databinding.ActivityMusicPlayerBinding;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
+import net.branium.view.services.MusicAction;
 
 import java.util.Random;
 
@@ -25,12 +27,12 @@ interface OnThreadClickListener {
     void action();
 }
 
-public class MusicPlayerActivity extends AppCompatActivity {
+public class MusicActivity extends AppCompatActivity implements MusicAction {
     private static int position = -1;
     private static Uri uri;
-    private static MediaPlayer mediaPlayer;
-    private static boolean isShuffle = false;
-    private static boolean isRepeat = false;
+    public static MediaPlayer mediaPlayer;
+    public static boolean isShuffle = false;
+    public static boolean isRepeat = false;
     private ActivityMusicPlayerBinding binding;
     private Handler handler = new Handler();
 
@@ -62,7 +64,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
             }
         });
-        MusicPlayerActivity.this.runOnUiThread(new Runnable() {
+        MusicActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mediaPlayer != null) {
@@ -74,7 +76,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
             }
         });
 
-        mediaPlayer.setOnCompletionListener(mp -> onClickSkipNextBtn());
+        mediaPlayer.setOnCompletionListener(mp -> skipNext());
 
         binding.ivMusicPlayerShuffle.setOnClickListener(v -> {
             if (isShuffle) {
@@ -95,8 +97,11 @@ public class MusicPlayerActivity extends AppCompatActivity {
         });
 
         binding.ivMusicPlayerCloseDown.setOnClickListener(v -> {
-            mediaPlayer.stop();
-            mediaPlayer.release();
+//            if (mediaPlayer != null) {
+//                mediaPlayer.stop();
+//                mediaPlayer.release();
+//                mediaPlayer = null;
+//            }
             finish();
         });
     }
@@ -127,17 +132,25 @@ public class MusicPlayerActivity extends AppCompatActivity {
     private void setUpSongData(Song currentSong) {
         binding.tvMusicPlayerTitle.setText(currentSong.getTitle());
         binding.tvMusicPlayerArtist.setText(currentSong.getArtist());
-        Glide.with(binding.ivMusicPlayerPhoto).load(currentSong.getImage()).into(binding.ivMusicPlayerPhoto);
+        Glide.with(getApplicationContext()).load(currentSong.getImage()).into(binding.ivMusicPlayerPhoto);
         binding.tvMusicPlayerDurationTotal.setText(getFormattedDuration(currentSong.getDuration()));
         binding.seekBarMusicPlayer.setMax(currentSong.getDuration());
         uri = Uri.parse(currentSong.getSource());
+
+        Constants.MINI_PLAYER_ACTIVE = true;
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARE_PREFERENCE_KEY, MODE_PRIVATE).edit();
+        editor.putString(Constants.MUSIC_TITLE, currentSong.getTitle());
+        editor.putString(Constants.MUSIC_ARTIST, currentSong.getArtist());
+        editor.putString(Constants.MUSIC_IMAGE, currentSong.getImage());
+        editor.putString(Constants.MUSIC_SOURCE, uri.toString());
+        editor.apply();
     }
 
     @Override
     protected void onResume() {
-        setUpThread(binding.fltBtnMusicPlayerPlayPause, this::onClickPlayPauseBtn);
-        setUpThread(binding.ivMusicPlayerSkipNext, this::onClickSkipNextBtn);
-        setUpThread(binding.ivMusicPlayerSkipPrevious, this::onClickSkipPreviousBtn);
+        setUpThread(binding.fltBtnMusicPlayerPlayPause, this::playPause);
+        setUpThread(binding.ivMusicPlayerSkipNext, this::skipNext);
+        setUpThread(binding.ivMusicPlayerSkipPrevious, this::skipPrevious);
         super.onResume();
     }
 
@@ -156,7 +169,8 @@ public class MusicPlayerActivity extends AppCompatActivity {
         thread.start();
     }
 
-    private void onClickPlayPauseBtn() {
+    @Override
+    public void playPause() {
         if (mediaPlayer.isPlaying()) {
             binding.fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_play_24);
             mediaPlayer.pause();
@@ -166,7 +180,8 @@ public class MusicPlayerActivity extends AppCompatActivity {
         }
     }
 
-    private void onClickSkipPreviousBtn() {
+    @Override
+    public void skipPrevious() {
         mediaPlayer.stop();
         mediaPlayer.release();
         if (!isShuffle && !isRepeat) {
@@ -177,11 +192,12 @@ public class MusicPlayerActivity extends AppCompatActivity {
         setUpSongData(Constants.PLAYLIST_SONG_LIST.get(position));
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         binding.fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_pause_24);
-        mediaPlayer.setOnCompletionListener(mp -> onClickSkipNextBtn());
+        mediaPlayer.setOnCompletionListener(mp -> skipNext());
         mediaPlayer.start();
     }
 
-    private void onClickSkipNextBtn() {
+    @Override
+    public void skipNext() {
         mediaPlayer.stop();
         mediaPlayer.release();
         if (!isShuffle && !isRepeat) {
@@ -192,7 +208,9 @@ public class MusicPlayerActivity extends AppCompatActivity {
         setUpSongData(Constants.PLAYLIST_SONG_LIST.get(position));
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         binding.fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_pause_24);
-        mediaPlayer.setOnCompletionListener(mp -> onClickSkipNextBtn());
+        mediaPlayer.setOnCompletionListener(mp -> {
+            skipNext();
+        });
         mediaPlayer.start();
     }
 }
