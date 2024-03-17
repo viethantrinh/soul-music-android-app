@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import net.branium.R;
+import net.branium.databinding.FragmentMiniPlayerBinding;
 import net.branium.utils.Constants;
 import net.branium.view.activities.MusicActivity;
 

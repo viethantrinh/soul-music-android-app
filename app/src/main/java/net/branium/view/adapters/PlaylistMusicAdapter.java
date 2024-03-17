@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.branium.R;
+import net.branium.databinding.PlaylistItemMusicLayoutBinding;
 import net.branium.model.Song;
 import net.branium.view.activities.MusicActivity;
 
