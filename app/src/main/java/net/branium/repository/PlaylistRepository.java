@@ -1,6 +1,7 @@
 package net.branium.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -32,6 +33,7 @@ public class PlaylistRepository {
                 if (playlistListResponse != null && !playlistListResponse.isEmpty()) {
                     Constants.USER_PLAYLIST_LIST.clear();
                     Constants.USER_PLAYLIST_LIST.addAll(playlistListResponse);
+                    Constants.USER_PLAYLIST_LIST.forEach(playlist -> System.out.println(playlist));
                     mutableLiveDataPlaylistList.setValue(Constants.USER_PLAYLIST_LIST);
                 }
             }

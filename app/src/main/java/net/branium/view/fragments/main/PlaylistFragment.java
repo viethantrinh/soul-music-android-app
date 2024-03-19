@@ -1,13 +1,17 @@
 package net.branium.view.fragments.main;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,10 +69,44 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.search, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_option);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        MenuItem menuItemSearch = menu.findItem(R.id.search_option);
+
+        MenuItem sortOptionsItem = menu.findItem(R.id.sort_options);
+        sortOptionsItem.setIcon(R.drawable.ic_more_vert_24);
+        sortOptionsItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        SearchView searchView = (SearchView) menuItemSearch.getActionView();
+
+        changeIconSearchView(searchView);
+
         searchView.setOnQueryTextListener(this);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void changeIconSearchView(SearchView searchView) {
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_button);
+        // Customize the icon
+        if (searchIcon != null) {
+            searchIcon.setColorFilter(Color.WHITE); // Set color to white
+            searchIcon.setScaleX(1.4f); // Increase size
+            searchIcon.setScaleY(1.4f); // Increase size
+        }
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+                if (searchEditText != null) {
+                    searchEditText.setTextColor(Color.WHITE);
+                    searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+                }
+                ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+                if (closeIcon != null) {
+                    closeIcon.setColorFilter(Color.WHITE);
+                    closeIcon.setScaleX(1.1f);
+                    closeIcon.setScaleY(1.1f);
+                }
+            }
+        });
     }
 
     @Override

@@ -28,6 +28,13 @@ public class Constants {
     public static final String MUSIC_SOURCE = "MUSIC_SOURCE";
     public static boolean MINI_PLAYER_ACTIVE = false;
 
+    // constants for broadcast receiver
+    public static final String CHANNEL_ID_1 = "channel1";
+    public static final String CHANNEL_ID_2 = "channel2";
+    public static final String ACTION_PREVIOUS = "actionprevious";
+    public static final String ACTION_NEXT = "actionnext";
+    public static final String ACTION_PLAY = "actionplay";
+
 
     // static data for home fragment
     public static final List<Song> HOME_SONG_LIST = new ArrayList<>();

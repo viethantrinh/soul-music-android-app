@@ -1,7 +1,10 @@
 package net.branium.view.activities;
 
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,13 +36,19 @@ public class MainActivity extends AppCompatActivity {
     private static ViewPager2 viewPagerMain;
     public static Fragment miniPlayerFragment = new MiniPlayerFragment();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        
         configuration();
+        binding.fragBottomPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "hahaha", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void configuration() {

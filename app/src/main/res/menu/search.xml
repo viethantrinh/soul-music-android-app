@@ -14,6 +14,12 @@
         app:showAsAction="never">
         <menu>
             <item
+                android:title="Sắp xếp theo"
+                android:id="@+id/ny_title"
+                android:textColor="#333333"
+                android:enabled="false"
+                app:showAsAction="never"/>
+            <item
                 android:title="Tên bài hát"
                 android:id="@+id/by_name_list"
                 app:showAsAction="never"/>

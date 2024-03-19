@@ -94,4 +94,14 @@ public class Playlist extends BaseObservable {
         this.songNumber = songNumber;
         notifyPropertyChanged(BR.songNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", songNumber=" + songNumber +
+                '}';
+    }
 }
