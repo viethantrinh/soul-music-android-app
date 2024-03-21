@@ -1,6 +1,7 @@
 package net.branium.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.branium.R;
 import net.branium.databinding.HomeItemMusicLayoutBinding;
 import net.branium.model.Song;
+import net.branium.view.activities.MusicActivity;
 
 import java.util.List;
 
@@ -59,7 +61,9 @@ public class HomeMusicAdapter extends RecyclerView.Adapter<HomeMusicAdapter.Home
             homeItemMusicLayoutBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // ấn vào xử lý hiện bài hát lên
+                    Intent intent = new Intent(context, MusicActivity.class);
+                    intent.putExtra("position", getAdapterPosition());
+                    context.startActivity(intent);
                 }
             });
         }

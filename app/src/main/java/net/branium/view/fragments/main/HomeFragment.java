@@ -27,7 +27,7 @@ import net.branium.model.Playlist;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
 import net.branium.view.adapters.HomeAlbumAdapter;
-import net.branium.view.adapters.HomeLovePlaylistAdapter;
+import net.branium.view.adapters.LovePlaylistAdapter;
 import net.branium.view.adapters.HomeMusicAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
 
@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     private HomeFragmentViewModel homeFragmentViewModel;
     private HomeMusicAdapter homeMusicAdapter;
     private HomeAlbumAdapter homeAlbumAdapter;
-    private HomeLovePlaylistAdapter homeLovePlaylistAdapter;
+    private LovePlaylistAdapter lovePlaylistAdapter;
     private FragmentHomeBinding binding;
 
     @Override
@@ -58,10 +58,10 @@ public class HomeFragment extends Fragment {
         homeFragmentViewModel.getAllUserPlaylist(currentUserId).observe(requireActivity(), new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
-                homeLovePlaylistAdapter = new HomeLovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
+                lovePlaylistAdapter = new LovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
                 binding.homeRecycleViewUserLovePlaylist.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-                binding.homeRecycleViewUserLovePlaylist.setAdapter(homeLovePlaylistAdapter);
-                homeLovePlaylistAdapter.notifyDataSetChanged();
+                binding.homeRecycleViewUserLovePlaylist.setAdapter(lovePlaylistAdapter);
+                lovePlaylistAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -10,34 +10,37 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.branium.R;
-import net.branium.databinding.HomeItemLovePlaylistLayoutBinding;
+import net.branium.databinding.ItemLovePlaylistLayoutBinding;
 import net.branium.model.Playlist;
 
 import java.util.List;
 
-public class HomeLovePlaylistAdapter extends RecyclerView.Adapter<HomeLovePlaylistAdapter.HomeLovePlaylistViewHolder> {
+/**
+ * Class này là adapter hiển thị danh sách các love playlist
+ */
+public class LovePlaylistAdapter extends RecyclerView.Adapter<LovePlaylistAdapter.LovePlaylistViewHolder> {
     private List<Playlist> playlistList;
     private Context context;
 
-    public HomeLovePlaylistAdapter(List<Playlist> playlistList, Context context) {
+    public LovePlaylistAdapter(List<Playlist> playlistList, Context context) {
         this.playlistList = playlistList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public HomeLovePlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        HomeItemLovePlaylistLayoutBinding binding = DataBindingUtil.inflate(
+    public LovePlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemLovePlaylistLayoutBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.home_item_love_playlist_layout,
+                R.layout.item_love_playlist_layout,
                 parent,
                 false
         );
-        return new HomeLovePlaylistViewHolder(binding);
+        return new LovePlaylistViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeLovePlaylistViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LovePlaylistViewHolder holder, int position) {
         Playlist playlist = playlistList.get(position);
         holder.binding.setPlaylist(playlist);
     }
@@ -47,10 +50,10 @@ public class HomeLovePlaylistAdapter extends RecyclerView.Adapter<HomeLovePlayli
         return playlistList.size();
     }
 
-    public class HomeLovePlaylistViewHolder extends RecyclerView.ViewHolder {
-        private HomeItemLovePlaylistLayoutBinding binding;
+    public class LovePlaylistViewHolder extends RecyclerView.ViewHolder {
+        private ItemLovePlaylistLayoutBinding binding;
 
-        public HomeLovePlaylistViewHolder(HomeItemLovePlaylistLayoutBinding binding) {
+        public LovePlaylistViewHolder(ItemLovePlaylistLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 

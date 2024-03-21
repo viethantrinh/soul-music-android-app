@@ -28,7 +28,7 @@ import net.branium.model.Playlist;
 import net.branium.repository.UserRepository;
 import net.branium.utils.Constants;
 import net.branium.view.activities.AuthActivity;
-import net.branium.view.adapters.HomeLovePlaylistAdapter;
+import net.branium.view.adapters.LovePlaylistAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private UserRepository userRepo = new UserRepository();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FragmentUserBinding binding;
-    private HomeLovePlaylistAdapter homeLovePlaylistAdapter;
+    private LovePlaylistAdapter lovePlaylistAdapter;
     private HomeFragmentViewModel homeFragmentViewModel;
 
 
@@ -141,10 +141,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         homeFragmentViewModel.getAllUserPlaylist(currentUserId).observe(requireActivity(), new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
-                homeLovePlaylistAdapter = new HomeLovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
+                lovePlaylistAdapter = new LovePlaylistAdapter(Constants.USER_PLAYLIST_LIST, requireContext());
                 binding.recyclerViewUserLovePlaylistInUserFrag.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-                binding.recyclerViewUserLovePlaylistInUserFrag.setAdapter(homeLovePlaylistAdapter);
-                homeLovePlaylistAdapter.notifyDataSetChanged();
+                binding.recyclerViewUserLovePlaylistInUserFrag.setAdapter(lovePlaylistAdapter);
+                lovePlaylistAdapter.notifyDataSetChanged();
             }
         });
     }
