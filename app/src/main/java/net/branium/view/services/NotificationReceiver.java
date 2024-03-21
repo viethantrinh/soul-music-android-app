@@ -21,7 +21,6 @@ public class NotificationReceiver extends BroadcastReceiver {
                     context.startService(servicenIntent);
                 }
                 case ACTION_NEXT -> {
-                    Toast.makeText(context, "Next", Toast.LENGTH_SHORT).show();
                     servicenIntent.putExtra("ActionName", "next");
                     context.startService(servicenIntent);
                 }

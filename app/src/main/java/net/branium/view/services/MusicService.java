@@ -1,19 +1,22 @@
 package net.branium.view.services;
 
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
+import net.branium.utils.Notification;
 
 public class MusicService extends Service{
     IBinder myBinder = new MyBinder();
     MusicAction musicAction;
+    Notification notification;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        notification = new Notification(this);
 
     }
     @Nullable
@@ -35,13 +38,11 @@ public class MusicService extends Service{
                 switch (actionName) {
                     case "playPause" -> {
                         if (musicAction != null) {
-                            Toast.makeText(this, "Play Pause", Toast.LENGTH_SHORT).show();
                             musicAction.playPause();
                         }
                     }
                     case "next" -> {
                         if (musicAction != null) {
-                            Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
                             musicAction.skipNext();
                         }
                     }
@@ -59,5 +60,4 @@ public class MusicService extends Service{
     public void setCallBack(MusicAction musicAction) {
         this.musicAction = musicAction;
     }
-
 }

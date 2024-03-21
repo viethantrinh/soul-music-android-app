@@ -1,6 +1,5 @@
 package net.branium.view.fragments.main;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -21,14 +19,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import net.branium.R;
 import net.branium.databinding.FragmentPlaylistBinding;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
 import net.branium.view.adapters.PlaylistMusicAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -52,6 +48,7 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
         getSongList();
         return binding.getRoot();
     }
+
 
     private void getSongList() {
         homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);

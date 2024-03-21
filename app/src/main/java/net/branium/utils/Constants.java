@@ -35,7 +35,6 @@ public class Constants {
     public static final String ACTION_NEXT = "actionnext";
     public static final String ACTION_PLAY = "actionplay";
 
-
     // static data for home fragment
     public static final List<Song> HOME_SONG_LIST = new ArrayList<>();
     public static final List<Song> PLAYLIST_SONG_LIST = new ArrayList<>();

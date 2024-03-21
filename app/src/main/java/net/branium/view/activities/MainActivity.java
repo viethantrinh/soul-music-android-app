@@ -1,10 +1,11 @@
 package net.branium.view.activities;
 
-import android.content.ComponentName;
+import static net.branium.view.activities.MusicActivity.position;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import net.branium.R;
@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         binding.fragBottomPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "hahaha", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MusicActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
             }
         });
     }
