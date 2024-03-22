@@ -27,8 +27,8 @@ import net.branium.model.Playlist;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
 import net.branium.view.adapters.HomeAlbumAdapter;
-import net.branium.view.adapters.LovePlaylistAdapter;
 import net.branium.view.adapters.HomeMusicAdapter;
+import net.branium.view.adapters.LovePlaylistAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
 
 import java.util.List;

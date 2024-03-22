@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.branium.R;
 import net.branium.databinding.PlaylistItemMusicLayoutBinding;
 import net.branium.model.Song;
+import net.branium.utils.Constants;
 import net.branium.view.activities.MusicActivity;
 
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class PlaylistMusicAdapter extends RecyclerView.Adapter<PlaylistMusicAdap
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MusicActivity.class);
                     intent.putExtra("position", getAdapterPosition());
+                    intent.putExtra("type", 1);
                     context.startActivity(intent);
                 }
             });

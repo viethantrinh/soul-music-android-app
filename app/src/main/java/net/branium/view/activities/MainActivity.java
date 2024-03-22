@@ -1,6 +1,6 @@
 package net.branium.view.activities;
 
-import static net.branium.view.activities.MusicActivity.position;
+import static net.branium.utils.Constants.position;
 
 import android.content.Intent;
 import android.os.Bundle;

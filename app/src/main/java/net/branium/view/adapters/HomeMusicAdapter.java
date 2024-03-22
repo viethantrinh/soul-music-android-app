@@ -63,6 +63,7 @@ public class HomeMusicAdapter extends RecyclerView.Adapter<HomeMusicAdapter.Home
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MusicActivity.class);
                     intent.putExtra("position", getAdapterPosition());
+                    intent.putExtra("type", 1);
                     context.startActivity(intent);
                 }
             });

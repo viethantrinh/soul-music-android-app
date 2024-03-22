@@ -5,7 +5,7 @@ import static net.branium.utils.Constants.ACTION_PLAY;
 import static net.branium.utils.Constants.ACTION_PREVIOUS;
 import static net.branium.utils.Constants.CHANNEL_ID_2;
 import static net.branium.utils.Constants.PLAYLIST_SONG_LIST;
-import static net.branium.view.activities.MusicActivity.position;
+import static net.branium.utils.Constants.position;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,8 +25,6 @@ import com.bumptech.glide.request.transition.Transition;
 
 import net.branium.R;
 import net.branium.view.services.NotificationReceiver;
-
-import java.util.Date;
 
 public class Notification {
 

@@ -1,12 +1,12 @@
 package net.branium.view.fragments.main;
 
 import static android.content.Context.MODE_PRIVATE;
-import static net.branium.view.activities.MusicActivity.currentPosition;
-import static net.branium.view.activities.MusicActivity.isRepeat;
-import static net.branium.view.activities.MusicActivity.isShuffle;
-import static net.branium.view.activities.MusicActivity.mediaPlayer;
-import static net.branium.view.activities.MusicActivity.position;
-import static net.branium.view.activities.MusicActivity.uri;
+import static net.branium.utils.Constants.currentPosition;
+import static net.branium.utils.Constants.isRepeat;
+import static net.branium.utils.Constants.isShuffle;
+import static net.branium.utils.Constants.mediaPlayer;
+import static net.branium.utils.Constants.position;
+import static net.branium.utils.Constants.uri;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;

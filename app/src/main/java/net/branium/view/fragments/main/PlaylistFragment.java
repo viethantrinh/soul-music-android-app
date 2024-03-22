@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -19,12 +20,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import net.branium.R;
 import net.branium.databinding.FragmentPlaylistBinding;
 import net.branium.model.Song;
 import net.branium.utils.Constants;
 import net.branium.view.adapters.PlaylistMusicAdapter;
 import net.branium.viewmodel.HomeFragmentViewModel;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

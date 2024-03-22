@@ -1,21 +1,25 @@
 package net.branium.view.activities;
 
+import static net.branium.utils.Constants.CURRENT_SONG_LIST;
+import static net.branium.utils.Constants.currentPosition;
+import static net.branium.utils.Constants.isRepeat;
+import static net.branium.utils.Constants.isShuffle;
+import static net.branium.utils.Constants.mediaPlayer;
+import static net.branium.utils.Constants.position;
+import static net.branium.utils.Constants.type;
+import static net.branium.utils.Constants.uri;
+
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.Toast;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -38,16 +42,9 @@ interface OnThreadClickListener {
 }
 
 public class MusicActivity extends AppCompatActivity implements MusicAction, ServiceConnection {
-    public static int position = -1;
-    public static int currentPosition = -1;
-
-    public static Uri uri;
-    public static MediaPlayer mediaPlayer;
-    public static boolean isShuffle = false;
-    public static boolean isRepeat = false;
     private ActivityMusicPlayerBinding binding;
     private Handler handler = new Handler();
-    MusicService musicService;
+    private MusicService musicService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +53,6 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
         binding = DataBindingUtil.setContentView(this, R.layout.activity_music_player);
         setupMediaPlayer();
         handleEventListener();
-
         Notification.showNotification(this, R.drawable.ic_pause_24);
     }
 
@@ -111,11 +107,6 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
         });
 
         binding.ivMusicPlayerCloseDown.setOnClickListener(v -> {
-//            if (mediaPlayer != null) {
-//                mediaPlayer.stop();
-//                mediaPlayer.release();
-//                mediaPlayer = null;
-//            }
             finish();
         });
     }
@@ -132,8 +123,12 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
 
     private void setupMediaPlayer() {
         position = getIntent().getIntExtra("position", -1);
-
-        Song currentSong = Constants.PLAYLIST_SONG_LIST.get(position);
+        type = getIntent().getIntExtra("type", -1);
+        if (type != -1) {
+            if (type == 1) CURRENT_SONG_LIST = Constants.PLAYLIST_SONG_LIST;
+            else if (type == 2) CURRENT_SONG_LIST = Constants.ALBUM_SONG_LIST;
+        }
+        Song currentSong = Constants.CURRENT_SONG_LIST.get(position);
         setUpSongData(currentSong);
         binding.fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_pause_24);
 
@@ -143,7 +138,7 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
                     mediaPlayer.stop();
                     mediaPlayer.release();
                 }
-                Song currentSong1 = Constants.PLAYLIST_SONG_LIST.get(position);
+                Song currentSong1 = Constants.CURRENT_SONG_LIST.get(position);
                 setUpSongData(currentSong1);
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
                 mediaPlayer.start();
@@ -155,7 +150,7 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
             } else {
                 binding.fltBtnMusicPlayerPlayPause.setImageResource(R.drawable.ic_play_24);
             }
-            Song currentSong1 = Constants.PLAYLIST_SONG_LIST.get(position);
+            Song currentSong1 = Constants.CURRENT_SONG_LIST.get(position);
             setUpSongData(currentSong1);
             return;
         }
@@ -235,11 +230,11 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
         mediaPlayer.stop();
         mediaPlayer.release();
         if (!isShuffle && !isRepeat) {
-            position = (position - 1 < 0) ? (Constants.PLAYLIST_SONG_LIST.size() - 1) : (position - 1);
+            position = (position - 1 < 0) ? (Constants.CURRENT_SONG_LIST.size() - 1) : (position - 1);
         } else if (isShuffle && !isRepeat) {
-            position = new Random().nextInt(Constants.PLAYLIST_SONG_LIST.size());
+            position = new Random().nextInt(Constants.CURRENT_SONG_LIST.size());
         } // (!isShuffle && isRepeat) or (isShuffle && isRepeat) => position = currentPosition
-        setUpSongData(Constants.PLAYLIST_SONG_LIST.get(position));
+        setUpSongData(Constants.CURRENT_SONG_LIST.get(position));
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
 
         Notification.showNotification(this, R.drawable.ic_pause_24);
@@ -253,11 +248,11 @@ public class MusicActivity extends AppCompatActivity implements MusicAction, Ser
         mediaPlayer.stop();
         mediaPlayer.release();
         if (!isShuffle && !isRepeat) {
-            position = ((position + 1) % Constants.PLAYLIST_SONG_LIST.size());
+            position = ((position + 1) % Constants.CURRENT_SONG_LIST.size());
         } else if (isShuffle && !isRepeat) {
-            position = new Random().nextInt(Constants.PLAYLIST_SONG_LIST.size());
+            position = new Random().nextInt(Constants.CURRENT_SONG_LIST.size());
         } // (!isShuffle && isRepeat) or (isShuffle && isRepeat) => position = currentPosition
-        setUpSongData(Constants.PLAYLIST_SONG_LIST.get(position));
+        setUpSongData(Constants.CURRENT_SONG_LIST.get(position));
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
 
         Notification.showNotification(this, R.drawable.ic_pause_24);

@@ -1,5 +1,8 @@
 package net.branium.utils;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
+
 import net.branium.model.Album;
 import net.branium.model.Playlist;
 import net.branium.model.Song;
@@ -26,7 +29,18 @@ public class Constants {
     public static final String MUSIC_ARTIST = "MUSIC_ARTIST";
     public static final String MUSIC_IMAGE = "MUSIC_IMAGE";
     public static final String MUSIC_SOURCE = "MUSIC_SOURCE";
+
+    // Music state constants
+    public static int position = -1;
+    public static int currentPosition = -1;
+    public static int type = -1;
+    public static Uri uri;
+    public static MediaPlayer mediaPlayer;
+    public static boolean isRepeat = false;
+    public static boolean isShuffle = false;
     public static boolean MINI_PLAYER_ACTIVE = false;
+    public static List<Song> CURRENT_SONG_LIST = new ArrayList<>(); // song list hiện tại tùy type
+
 
     // constants for broadcast receiver
     public static final String CHANNEL_ID_1 = "channel1";
@@ -36,8 +50,10 @@ public class Constants {
     public static final String ACTION_PLAY = "actionplay";
 
     // static data for home fragment
-    public static final List<Song> HOME_SONG_LIST = new ArrayList<>();
-    public static final List<Song> PLAYLIST_SONG_LIST = new ArrayList<>();
+    /* HOME_SONG_LIST và PLAYLIST_SONG_LIST dùng chung một list */
+    public static final List<Song> HOME_SONG_LIST = new ArrayList<>(); // type = 1 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
+    public static final List<Song> PLAYLIST_SONG_LIST = new ArrayList<>(); // type = 1 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
     public static final List<Album> ALBUM_LIST = new ArrayList<>();
+    public static final List<Song> ALBUM_SONG_LIST = new ArrayList<>(); // type = 2 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
     public static final List<Playlist> USER_PLAYLIST_LIST = new ArrayList<>();
 }

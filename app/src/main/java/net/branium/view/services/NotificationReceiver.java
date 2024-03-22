@@ -7,7 +7,6 @@ import static net.branium.utils.Constants.ACTION_PREVIOUS;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 public class NotificationReceiver extends BroadcastReceiver {
     @Override

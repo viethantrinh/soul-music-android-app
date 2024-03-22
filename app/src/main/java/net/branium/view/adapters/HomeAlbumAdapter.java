@@ -1,6 +1,7 @@
 package net.branium.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.branium.R;
 import net.branium.databinding.HomeItemAlbumLayoutBinding;
 import net.branium.model.Album;
+import net.branium.view.activities.AlbumActivity;
 
 import java.util.List;
 
@@ -59,7 +61,9 @@ public class HomeAlbumAdapter extends RecyclerView.Adapter<HomeAlbumAdapter.Home
             homeItemAlbumLayoutBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Khi nhấn vào album hiện ra ...
+                    Intent intent = new Intent(context, AlbumActivity.class);
+                    intent.putExtra("album_position", getAdapterPosition());
+                    context.startActivity(intent);
                 }
             });
         }
