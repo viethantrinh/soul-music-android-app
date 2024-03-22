@@ -81,6 +81,15 @@ public class MiniPlayerFragment extends Fragment implements MusicAction {
                 }
             }
         }
+        if(mediaPlayer != null) {
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    skipNext();
+                    currentPosition = position;
+                }
+            });
+        }
     }
 
     @Override
