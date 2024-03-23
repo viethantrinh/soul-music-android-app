@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
-    private static final String PATH = Constants.EMULATOR_FULL_PATH;
+    private static final String PATH = Constants.FULL_PATH;
     private static Retrofit retrofit = null;
 
     public static SongAPIService getSongAPIService() {
