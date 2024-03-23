@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#303030"
-        tools:context=".view.fragments.main.UserUpdateActivity">
+        tools:context=".view.user.UserUpdateActivity">
 
         <TextView
             android:id="@+id/textView6"

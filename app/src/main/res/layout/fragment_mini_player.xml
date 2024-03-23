@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
         app:cardCornerRadius="18dp"
-        tools:context=".view.fragments.main.MiniPlayerFragment">
+        tools:context=".view.musicplayer.MiniPlayerFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

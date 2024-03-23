@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="670dp"
     android:background="@color/main_background"
-    tools:context=".view.fragments.main.RankFragment">
+    tools:context=".view.rank.RankFragment">
 
     <TextView
         android:id="@+id/textView8"

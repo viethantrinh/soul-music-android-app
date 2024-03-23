@@ -95,6 +95,10 @@ public class Playlist extends BaseObservable {
         notifyPropertyChanged(BR.songNumber);
     }
 
+    public void addSong(Song song) {
+        songs.add(song);
+    }
+
     @Override
     public String toString() {
         return "Playlist{" +

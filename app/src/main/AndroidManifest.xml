@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".view.services.ApplicationClass"
+        android:name=".view.musicplayer.ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,23 +18,29 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.activities.LoveActivity"
+            android:name=".view.love.LoveCreateActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.AlbumActivity"
+            android:name=".view.love.LoveAddActivity"
             android:exported="false" />
         <activity
-            android:name=".view.fragments.main.UserUpdateActivity"
+            android:name=".view.love.LoveActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.MusicActivity"
+            android:name=".view.album.AlbumActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.AuthActivity"
+            android:name=".view.user.UserUpdateActivity"
             android:exported="false" />
-        <activity android:name=".view.activities.MainActivity" />
         <activity
-            android:name=".view.activities.SplashActivity"
+            android:name=".view.musicplayer.MusicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.auth.AuthActivity"
+            android:exported="false" />
+        <activity android:name=".view.main.MainActivity" />
+        <activity
+            android:name=".view.auth.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,12 +50,12 @@
         </activity>
 
         <service
-            android:name=".view.services.MusicService"
+            android:name=".view.musicplayer.MusicService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".view.services.NotificationReceiver"
+            android:name=".view.musicplayer.NotificationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

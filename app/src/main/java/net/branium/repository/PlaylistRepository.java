@@ -25,7 +25,7 @@ public class PlaylistRepository {
 
     public MutableLiveData<List<Playlist>> getMutableLiveDataPlaylistList(String uid) {
         var playlistApiService = RetrofitInstance.getPlaylistAPIService();
-        playlistApiService.getUserPlaylists(uid).enqueue(new Callback<List<Playlist>>() {
+        playlistApiService.getPlaylistsByUserId(uid).enqueue(new Callback<List<Playlist>>() {
             @Override
             public void onResponse(Call<List<Playlist>> call, Response<List<Playlist>> response) {
                 List<Playlist> playlistListResponse = response.body();
@@ -44,5 +44,34 @@ public class PlaylistRepository {
         });
 
         return mutableLiveDataPlaylistList;
+    }
+
+    public void updatePlaylist(Playlist playlist) {
+        var playlistApiService = RetrofitInstance.getPlaylistAPIService();
+        playlistApiService.updatePlaylist(playlist).enqueue(new Callback<Playlist>() {
+            @Override
+            public void onResponse(Call<Playlist> call, Response<Playlist> response) {
+                System.out.println(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Playlist> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void createPlaylistToUser(Playlist playlist, String id) {
+        var playlistApiService = RetrofitInstance.getPlaylistAPIService();
+        playlistApiService.createPlaylistToUser(playlist, id).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Lỗi rồi!");
+            }
+        });
     }
 }

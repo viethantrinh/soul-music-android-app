@@ -8,7 +8,7 @@
         android:layout_height="670dp"
         android:background="@color/main_background"
         android:theme="@style/Base.Theme.SoulMusicAppProject"
-        tools:context=".view.fragments.main.HomeFragment">
+        tools:context=".view.home.HomeFragment">
 
 
         <TextView

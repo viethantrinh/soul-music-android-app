@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".view.love.LoveCreateActivity">
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Đặt tên cho danh sách phát yêu thích của bạn"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_love_create_love_playlist_name"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_edit_text_2"
+            android:ems="10"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="Tên danh sách yêu thích"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="#666867"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mt_btn_love_create_add"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="60dp"
+            android:backgroundTint="@color/medium_green"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Tạo"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/et_love_create_love_playlist_name" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mt_btn_love_create_cancel"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="40dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Hủy"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_love_create_love_playlist_name" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
