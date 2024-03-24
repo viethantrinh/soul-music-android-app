@@ -35,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static ViewPager2 viewPagerMain;
     public static Fragment miniPlayerFragment = new MiniPlayerFragment();
+    private static Fragment homeFragment = new HomeFragment();
+    private static Fragment playlistFragment = new PlaylistFragment();
+    private static Fragment loveFragment = new LoveFragment();
+    private static Fragment rankFragment = new RankFragment();
+    private static Fragment userFragment = new UserFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 getLifecycle(),
-                List.of(new HomeFragment(), new PlaylistFragment(), new RankFragment(), new LoveFragment(), new UserFragment())
+                List.of(homeFragment, playlistFragment, rankFragment, loveFragment, userFragment)
         );
 
         binding.viewPagerMain.setAdapter(viewPagerAdapter);

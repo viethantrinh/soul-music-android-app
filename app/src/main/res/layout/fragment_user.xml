@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_user_container">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="670dp"
-        android:background="#303030"
+        android:layout_height="match_parent"
+        android:background="@color/black"
         tools:context=".view.user.UserFragment">
 
         <TextView
@@ -71,7 +72,7 @@
             android:id="@+id/mt_btn_update_account"
             android:layout_width="80dp"
             android:layout_height="40dp"
-            android:backgroundTint="#303030"
+            android:backgroundTint="@color/black"
             android:fontFamily="@font/inter_semibold"
             android:text="Sửa"
             android:textColor="#22D062"
@@ -85,16 +86,16 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mt_btn_delete_account"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="20dp"
-            android:backgroundTint="#303030"
+            android:backgroundTint="@color/white"
             android:fontFamily="@font/inter_semibold"
             android:text="Xóa tài khoản"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16dp"
-            app:cornerRadius="20dp"
+            app:cornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewUserLovePlaylistInUserFrag"
@@ -105,16 +106,16 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mt_btn_logout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#303030"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/white"
             android:fontFamily="@font/inter_semibold"
             android:text="Đăng xuất"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16dp"
-            app:cornerRadius="20dp"
+            app:cornerRadius="50dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewUserLovePlaylistInUserFrag"
@@ -124,13 +125,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewUserLovePlaylistInUserFrag"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="180dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView9"

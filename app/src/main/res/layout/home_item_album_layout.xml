@@ -12,9 +12,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:layout_marginRight="10dp"
-        android:backgroundTint="@color/main_background"
+        android:backgroundTint="@color/black"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,16 +36,16 @@
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@{album.title}"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shapeableImageView2"
                 app:layout_constraintVertical_bias="0.0" />

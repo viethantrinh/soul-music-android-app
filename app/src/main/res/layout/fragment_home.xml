@@ -5,12 +5,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="670dp"
-        android:background="@color/main_background"
+        android:layout_height="match_parent"
+        android:background="@color/black"
         android:theme="@style/Base.Theme.SoulMusicAppProject"
         tools:context=".view.home.HomeFragment">
-
-
         <TextView
             android:id="@+id/textView10"
             android:layout_width="0dp"
@@ -25,12 +23,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_nested_scroll_view"
             android:layout_width="0dp"
-            android:layout_height="520dp"
+            android:layout_height="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -81,10 +80,10 @@
                     android:id="@+id/home_recycle_view_list_album"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="13dp"
                     android:focusableInTouchMode="true"
-                    android:touchscreenBlocksFocus="true"
                     android:orientation="horizontal"
+                    android:touchscreenBlocksFocus="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -93,10 +92,10 @@
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Danh sách yêu thích của bạn"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/inter_semibold"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/home_recycle_view_list_album" />
@@ -105,13 +104,13 @@
                     android:id="@+id/home_recycle_view_user_love_playlist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="13dp"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14"
-                    tools:itemCount="1" />
+                    tools:itemCount="9" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

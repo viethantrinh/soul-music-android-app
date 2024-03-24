@@ -14,7 +14,7 @@
         <item name="cornerSize">10%</item>
     </style>
     <style name="mini_player_rounded_music_photo">
-        <item name="cornerSizeTopLeft">20%</item>
-        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerSizeTopLeft">10%</item>
+        <item name="cornerSizeBottomLeft">10%</item>
     </style>
 </resources>

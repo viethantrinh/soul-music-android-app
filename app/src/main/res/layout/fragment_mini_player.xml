@@ -5,8 +5,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        app:cardCornerRadius="18dp"
+        android:backgroundTint="@color/main_background"
+        app:cardCornerRadius="10dp"
         tools:context=".view.musicplayer.MiniPlayerFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,17 +41,19 @@
                 android:id="@+id/fab_play_pause_mini_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginBottom="5dp"
                 android:layout_toStartOf="@id/iv_mini_skip_next_button"
                 android:backgroundTint="@color/medium_green"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_play_24"
-                app:fabSize="mini"
+                app:fabCustomSize="50dp"
+                app:fabSize="auto"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 app:shapeAppearance="@style/circular" />
 
             <TextView
@@ -60,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:layout_marginEnd="15dp"
                 android:layout_toStartOf="@id/fab_play_pause_mini_player"
                 android:layout_toEndOf="@id/iv_mini_album_art"

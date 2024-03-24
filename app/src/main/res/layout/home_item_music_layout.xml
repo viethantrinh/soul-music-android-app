@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/main_background"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp">
 

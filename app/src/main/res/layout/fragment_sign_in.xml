@@ -36,7 +36,7 @@
             android:id="@+id/imageView"
             android:layout_width="185dp"
             android:layout_height="160dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="60dp"
             android:contentDescription="@string/txt_iv_content_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,20 +7,19 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_background"
+        android:background="@color/black"
         tools:context=".view.musicplayer.MusicActivity">
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Trình phát nhạc"
             android:textColor="@color/white"
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_music_player_close_down"
-            app:layout_constraintEnd_toStartOf="@+id/iv_music_player_option"
-            app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toEndOf="@+id/iv_music_player_close_down"
             app:layout_constraintTop_toTopOf="@+id/iv_music_player_close_down" />
 
@@ -28,12 +27,12 @@
             android:id="@+id/iv_music_player_option"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/textView7"
             app:srcCompat="@drawable/ic_three_dot_horz_24" />
 
         <ImageView
@@ -41,7 +40,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +52,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginStart="55dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="55dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,50 +95,49 @@
             android:id="@+id/iv_music_player_skip_next"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="110dp"
-            android:layout_marginBottom="55dp"
+            android:layout_marginStart="20dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/flt_btn_music_player_play_pause"
+            app:layout_constraintStart_toEndOf="@+id/flt_btn_music_player_play_pause"
+            app:layout_constraintTop_toTopOf="@+id/flt_btn_music_player_play_pause"
             app:srcCompat="@drawable/ic_skip_next_24" />
 
         <ImageView
             android:id="@+id/iv_music_player_skip_previous"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="110dp"
-            android:layout_marginBottom="55dp"
+            android:layout_marginEnd="20dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/flt_btn_music_player_play_pause"
+            app:layout_constraintEnd_toStartOf="@+id/flt_btn_music_player_play_pause"
+            app:layout_constraintTop_toTopOf="@+id/flt_btn_music_player_play_pause"
             app:srcCompat="@drawable/ic_skip_previous_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/flt_btn_music_player_play_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:backgroundTint="@color/medium_green"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_play_24"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_music_player_skip_previous"
-            app:layout_constraintEnd_toStartOf="@+id/iv_music_player_skip_next"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toEndOf="@+id/iv_music_player_skip_previous"
-            app:layout_constraintTop_toTopOf="@+id/iv_music_player_skip_previous"
+            app:layout_constraintEnd_toStartOf="@+id/tv_music_player_duration_total"
+            app:layout_constraintStart_toEndOf="@+id/tv_music_player_duration_run"
+            app:layout_constraintTop_toBottomOf="@+id/seek_bar_music_player"
             app:shapeAppearance="@style/circular" />
 
         <ImageView
             android:id="@+id/iv_music_player_shuffle"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="55dp"
+            android:layout_marginEnd="30dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@+id/iv_music_player_skip_previous"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_music_player_skip_previous"
             app:layout_constraintTop_toTopOf="@+id/iv_music_player_skip_previous"
             app:srcCompat="@drawable/ic_shuffle_off_24" />
 
@@ -147,11 +145,11 @@
             android:id="@+id/iv_music_player_repeat"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="55dp"
+            android:layout_marginStart="30dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@+id/iv_music_player_skip_next"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_music_player_skip_next"
             app:layout_constraintTop_toTopOf="@+id/iv_music_player_skip_next"
             app:srcCompat="@drawable/ic_repeat_off_24" />
 
@@ -159,27 +157,25 @@
             android:id="@+id/tv_music_player_duration_run"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/inter"
+            android:fontFamily="@font/inter_medium"
             android:text="1:28"
             android:textColor="@color/medium_green"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_music_player_artist" />
+            app:layout_constraintBottom_toBottomOf="@+id/seek_bar_music_player"
+            app:layout_constraintEnd_toStartOf="@+id/seek_bar_music_player"
+            app:layout_constraintTop_toTopOf="@+id/seek_bar_music_player" />
 
         <TextView
             android:id="@+id/tv_music_player_duration_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:fontFamily="@font/inter"
+            android:fontFamily="@font/inter_medium"
             android:text="4:20"
             android:textColor="@color/medium_green"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_music_player_artist" />
+            app:layout_constraintBottom_toBottomOf="@+id/seek_bar_music_player"
+            app:layout_constraintStart_toEndOf="@+id/seek_bar_music_player"
+            app:layout_constraintTop_toTopOf="@+id/seek_bar_music_player" />
 
         <SeekBar
             android:id="@+id/seek_bar_music_player"
@@ -190,8 +186,8 @@
             android:progressBackgroundTint="@color/very_light_green"
             android:progressTint="@color/medium_green"
             android:thumbTint="@color/medium_green"
-            app:layout_constraintEnd_toStartOf="@+id/tv_music_player_duration_total"
-            app:layout_constraintStart_toEndOf="@+id/tv_music_player_duration_run"
+            app:layout_constraintEnd_toEndOf="@+id/iv_music_player_photo"
+            app:layout_constraintStart_toStartOf="@+id/iv_music_player_photo"
             app:layout_constraintTop_toBottomOf="@+id/tv_music_player_artist" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
