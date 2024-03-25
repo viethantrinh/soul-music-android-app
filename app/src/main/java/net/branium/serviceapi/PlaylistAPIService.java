@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -22,5 +23,6 @@ public interface PlaylistAPIService {
     @POST("playlists/users/{id}")
     Call<Void> createPlaylistToUser(@Body Playlist playlist, @Path(value = "id") String id);
 
-
+    @DELETE("playlists/{id}")
+    Call<Void> deletePlaylist(@Path(value = "id") String id);
 }

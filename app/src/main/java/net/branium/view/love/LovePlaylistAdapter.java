@@ -1,6 +1,7 @@
 package net.branium.view.love;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,9 @@ public class LovePlaylistAdapter extends RecyclerView.Adapter<LovePlaylistAdapte
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(context, LoveActivity.class);
+                    intent.putExtra("love_playlist_position", getAdapterPosition());
+                    context.startActivity(intent);
                 }
             });
         }

@@ -99,6 +99,10 @@ public class Playlist extends BaseObservable {
         songs.add(song);
     }
 
+    public void deleteSong(int position) {
+        songs.remove(position);
+    }
+
     @Override
     public String toString() {
         return "Playlist{" +

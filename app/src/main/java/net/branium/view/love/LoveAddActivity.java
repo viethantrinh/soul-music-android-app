@@ -30,6 +30,7 @@ public class LoveAddActivity extends AppCompatActivity {
     private Song songToAdd = new Song();
     private int albumSongPosition = -1;
     private int albumPosition = -1;
+    private boolean checkAlbum;
     public static List<Integer> lovePlaylistIds = new ArrayList<>();
 
     @Override
@@ -53,6 +54,7 @@ public class LoveAddActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoveCreateActivity.class);
             intent.putExtra("album_song_position", albumSongPosition);
             intent.putExtra("album_position", albumPosition);
+            intent.putExtra("flag_check_album", true);
             startActivity(intent);
         });
         binding.mtBtnLoveAddConfirm.setOnClickListener(v -> {
@@ -99,8 +101,11 @@ public class LoveAddActivity extends AppCompatActivity {
     }
 
     private void setUpLovePlaylistData() {
-        albumPosition = getIntent().getIntExtra("album_position", -1);
-        albumSongPosition = getIntent().getIntExtra("album_song_position", -1);
+        checkAlbum = getIntent().getBooleanExtra("flag_check_album", false);
+        if(checkAlbum) {
+            albumPosition = getIntent().getIntExtra("album_position", -1);
+            albumSongPosition = getIntent().getIntExtra("album_song_position", -1);
+        }
         songToAdd = Constants.ALBUM_SONG_LIST.get(albumSongPosition);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserId = firebaseUser.getUid();

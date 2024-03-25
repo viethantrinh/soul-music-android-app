@@ -22,17 +22,19 @@ public class LoveCreateActivity extends AppCompatActivity {
     private ActivityLoveCreateBinding binding;
     private Song songToAdd = new Song();
     private int albumSongPosition = -1;
-    private int albumPosition = -1;
     private PlaylistRepository playlistRepo;
+    private boolean checkAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_love_create);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_love_create);
-        albumSongPosition = getIntent().getIntExtra("album_song_position", -1);
-        albumPosition = getIntent().getIntExtra("album_position", -1);
-        songToAdd = Constants.ALBUM_SONG_LIST.get(albumSongPosition);
+        checkAlbum = getIntent().getBooleanExtra("flag_check_album", false);
+        if(checkAlbum) {
+            albumSongPosition = getIntent().getIntExtra("album_song_position", -1);
+            songToAdd = Constants.ALBUM_SONG_LIST.get(albumSongPosition);
+        }
         playlistRepo = new PlaylistRepository(getApplication());
         handleEventListener();
     }
@@ -45,15 +47,14 @@ public class LoveCreateActivity extends AppCompatActivity {
                 String lovePlaylistName = binding.etLoveCreateLovePlaylistName.getText().toString();
                 if (!isDuplicated(lovePlaylistName)) {
                     Playlist playlist = new Playlist();
-                    playlist.addSong(songToAdd);
+                    if(checkAlbum) {
+                        playlist.addSong(songToAdd);
+                    }
                     playlist.setSongNumber(playlist.getSongs().size());
                     playlist.setTitle(binding.etLoveCreateLovePlaylistName.getText().toString());
                     playlistRepo.createPlaylistToUser(playlist, currentUser.getUid());
                     Toast.makeText(this, "Tạo danh sách yêu thích thành công!", Toast.LENGTH_SHORT).show();
                     finish();
-//                    Intent intent = new Intent(this, AlbumActivity.class);
-//                    intent.putExtra("album_position", albumPosition);
-//                    startActivity(intent);
                 }
             }
         });

@@ -9,6 +9,7 @@ public class RetrofitInstance {
     private static final String PATH = Constants.FULL_PATH;
     private static Retrofit retrofit = null;
 
+    // songs
     public static SongAPIService getSongAPIService() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(PATH)
@@ -18,6 +19,7 @@ public class RetrofitInstance {
         return retrofit.create(SongAPIService.class);
     }
 
+    // albums
     public static AlbumAPIService getAlbumAPIService() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(PATH)
@@ -26,6 +28,7 @@ public class RetrofitInstance {
         return retrofit.create(AlbumAPIService.class);
     }
 
+    // users
     public static UserAPIService getUserAPIService() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(PATH)
@@ -34,6 +37,7 @@ public class RetrofitInstance {
         return retrofit.create(UserAPIService.class);
     }
 
+    // playlists
     public static PlaylistAPIService getPlaylistAPIService() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(PATH)

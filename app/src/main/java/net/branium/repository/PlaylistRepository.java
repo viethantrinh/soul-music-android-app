@@ -18,7 +18,6 @@ public class PlaylistRepository {
     private MutableLiveData<List<Playlist>> mutableLiveDataPlaylistList = new MutableLiveData<>();
     private Application application;
 
-
     public PlaylistRepository(Application application) {
         this.application = application;
     }
@@ -60,7 +59,6 @@ public class PlaylistRepository {
             }
         });
     }
-
     public void createPlaylistToUser(Playlist playlist, String id) {
         var playlistApiService = RetrofitInstance.getPlaylistAPIService();
         playlistApiService.createPlaylistToUser(playlist, id).enqueue(new Callback<Void>() {

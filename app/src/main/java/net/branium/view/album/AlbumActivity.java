@@ -71,6 +71,7 @@ public class AlbumActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoveAddActivity.class);
             intent.putExtra("album_song_position", position);
             intent.putExtra("album_position", albumPosition);
+            intent.putExtra("flag_check_album", true);
             startActivity(intent);
         }
         return super.onContextItemSelected(item);
