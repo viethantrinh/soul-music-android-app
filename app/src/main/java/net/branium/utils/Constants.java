@@ -53,6 +53,7 @@ public class Constants {
     /* HOME_SONG_LIST và PLAYLIST_SONG_LIST dùng chung một list */
     public static final List<Song> HOME_SONG_LIST = new ArrayList<>(); // type = 1 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
     public static final List<Song> PLAYLIST_SONG_LIST = new ArrayList<>(); // type = 1 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
+    public static final List<Song> TEMP_PLAYLIST_SONG_LIST = new ArrayList<>(PLAYLIST_SONG_LIST); // để lưu các bài hát khi tìm kiếm sẽ tìm
     public static final List<Album> ALBUM_LIST = new ArrayList<>();
     public static final List<Song> ALBUM_SONG_LIST = new ArrayList<>(); // type = 2 - để mediaplayer phân biệt được nên chơi nhạc từ list nào
     public static final List<Playlist> USER_PLAYLIST_LIST = new ArrayList<>();

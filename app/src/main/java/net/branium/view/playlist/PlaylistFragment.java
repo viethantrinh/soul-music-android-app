@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +30,9 @@ import net.branium.view.home.HomeFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlaylistFragment extends Fragment implements SearchView.OnQueryTextListener {
     private HomeFragmentViewModel homeFragmentViewModel;
@@ -79,6 +82,14 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
         changeIconSearchView(searchView);
 
         searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                playlistMusicAdapter.updateList1();
+                playlistMusicAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -117,27 +128,45 @@ public class PlaylistFragment extends Fragment implements SearchView.OnQueryText
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Constants.PLAYLIST_SONG_LIST) {
-            if (song.getTitle().toLowerCase().contains(userInput)) {
-                songs.add(song);
+        if(!userInput.equals("")) {
+            for (Song song : Constants.PLAYLIST_SONG_LIST) {
+                if (song.getTitle().toLowerCase().contains(userInput)) {
+                    songs.add(song);
+                }
             }
+        }else {
+            songs.addAll(Constants.PLAYLIST_SONG_LIST);
         }
         playlistMusicAdapter.updateList(songs);
+        playlistMusicAdapter.notifyDataSetChanged();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.by_name_list) {
-            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getTitle));
+            playlistMusicAdapter.sortByTitle((ArrayList<Song>) Constants.PLAYLIST_SONG_LIST);
+            Set<Song> uniqueSongs = new LinkedHashSet<>(Constants.PLAYLIST_SONG_LIST);
+            Constants.PLAYLIST_SONG_LIST.clear();
+            Constants.PLAYLIST_SONG_LIST.addAll(uniqueSongs);
+            playlistMusicAdapter.setSongList(Constants.PLAYLIST_SONG_LIST);
             playlistMusicAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.by_artist_list) {
-            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getArtist));
+            playlistMusicAdapter.sortByArtist((ArrayList<Song>) Constants.PLAYLIST_SONG_LIST);
+            Set<Song> uniqueSongs = new LinkedHashSet<>(Constants.PLAYLIST_SONG_LIST);
+            Constants.PLAYLIST_SONG_LIST.clear();
+            Constants.PLAYLIST_SONG_LIST.addAll(uniqueSongs);
+            playlistMusicAdapter.setSongList(Constants.PLAYLIST_SONG_LIST);
             playlistMusicAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.by_duration_list) {
-            Constants.PLAYLIST_SONG_LIST.sort(Comparator.comparing(Song::getDuration));
+            playlistMusicAdapter.sortByDuration((ArrayList<Song>) Constants.PLAYLIST_SONG_LIST);
+            Set<Song> uniqueSongs = new LinkedHashSet<>(Constants.PLAYLIST_SONG_LIST);
+            Constants.PLAYLIST_SONG_LIST.clear();
+            Constants.PLAYLIST_SONG_LIST.addAll(uniqueSongs);
+            playlistMusicAdapter.setSongList(Constants.PLAYLIST_SONG_LIST);
             playlistMusicAdapter.notifyDataSetChanged();
         }
         return true;
     }
+
 }
